@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="helloC.c" />
-    <ClCompile Include="helloCpp.cpp" />
+    <ClCompile Include="1.helloC.c" />
+    <ClCompile Include="1.helloCpp.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
