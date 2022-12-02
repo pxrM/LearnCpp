@@ -1,54 +1,24 @@
 #include <iostream>
 
-using namespace std;
-
-/*
-	结构体默认访问权限是public
-*/
-struct StructTestSuper
-{
-protected:
-	int m0;
-
-};
-
-struct StructTest :public StructTestSuper
-{
-	StructTest()
-	{
-
-	}
-	~StructTest()
-	{
-
-	}
-
-
-	int a;
-	float b;
-	void Func1() {}
-
-private:
-	int m1;
-	void Func2() {}
-
-protected:
-	int m2;
-	void Func3() {}
-
-};
-
-
-void GlobalFunc()
-{
-
-}
-
 class Monster
 {
 public:
 	Monster();
 	~Monster();
+
+	int a;
+	int b;
+
+	/* 
+	编译器会在编译阶段，会把该函数的代码复制到调用该函数的地方。
+	内联可以使用在内成员和结构体以及全局函数中
+	需要注意的地方：
+		1.内联函数最好放在.h文件中，声明和定义不会分开
+		2.内联函数一般需要简短的代码，最好不要出现循环、递归、Switch以及一些复杂的运算，否则会影响效率
+	*/
+	inline int GetP()const {
+		return b;
+	}
 
 private:
 
@@ -56,9 +26,7 @@ private:
 
 Monster::Monster()
 {
-	// 两种调用全局函数的方式
-	::GlobalFunc();
-	GlobalFunc();
+
 }
 
 Monster::~Monster()
@@ -67,8 +35,4 @@ Monster::~Monster()
 
 void main()
 {
-	StructTest test;
-	test.a = 0;
-	test.b = 0;
-	//test.m1  无法访问
 }
