@@ -6,23 +6,70 @@
 #include <iostream> // <xxx>表示引用系统文件
 
 
-/////////////// 形参引用 ///////////////
-
-void Fun_Cpp(int &cpp) // cpp支持穿引用
+/////////////// 形参引用不同 ///////////////
+struct FHello
 {
-
+	int a;
+	int b;
+	long int c;
+};
+void Fun_Cpp(int& cpp, FHello& fh) // cpp支持传引用，c语言不支持
+{
+	fh.a = 0;
 }
+
+void Fun_Ptr(FHello* fhPtr) //指针本身就是个对象，会占四个字节，使用指针传递参数会拷贝指针
+{
+	fhPtr->a = 0;
+}
+/////////////////////////////////////////////
+// 
+/////////////// 结构体不同 ///////////////
+struct FStruct
+{
+	int a;
+	int b;
+	long int c;
+
+	//cpp的结构体可以直接实现函数，c语言的结构体中只能放入函数指针
+	void Func() {}
+};
+/////////////////////////////////////////////
+
+/////////////// cpp有继承 c语言没有 ///////////////
+struct Super
+{
+	int a;
+	int b;
+};
+
+struct Child :public Super
+{
+	void Hello(int x, int y) {}
+};
 
 int main()
 {
-    /////////////// 打印 ///////////////
-    printf("Hello World! C \n");
-    std::cout << "Hello World! Cpp \n";
+	/////////////// 打印不同 ///////////////
+	printf("Hello World! C \n");
+	std::cout << "Hello World! Cpp \n";
 
-    /////////////// 变量 ///////////////
-    bool bOk = false;
-    // #include "stdbool.h" //c语言需要包含bool的头文件
+	/////////////// 变量不同 ///////////////
+	bool bOk = false;
+	// #include "stdbool.h" //c语言需要包含bool的头文件
+
+	/////////////// 形参引用不同 ///////////////
+	FHello fh;
+	int testIdx = 0;
+	Fun_Cpp(testIdx, fh);
+	Fun_Ptr(&fh);
+
+	/////////////// cpp有继承 c语言没有 ///////////////
+	Child child;
+	child.a = 0;
 }
+
+
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
 // 调试程序: F5 或调试 >“开始调试”菜单
