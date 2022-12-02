@@ -1,11 +1,27 @@
 ﻿// holleCpp.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
+// 
+// c和c++的一些基本区别
 //
 
-#include <iostream>
+#include <iostream> // <xxx>表示引用系统文件
+
+
+/////////////// 形参引用 ///////////////
+
+void Fun_Cpp(int &cpp) // cpp支持穿引用
+{
+
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    /////////////// 打印 ///////////////
+    printf("Hello World! C \n");
+    std::cout << "Hello World! Cpp \n";
+
+    /////////////// 变量 ///////////////
+    bool bOk = false;
+    // #include "stdbool.h" //c语言需要包含bool的头文件
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
