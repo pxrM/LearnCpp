@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="9.lambda_library.cpp">
+    <ClCompile Include="9.lambda.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

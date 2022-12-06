@@ -19,7 +19,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7.operation", "7.operation\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "8.overloading_rewrite", "8.overloading_rewrite\8.overloading_rewrite.vcxproj", "{5BB91FCE-2DC3-4F8E-9927-5A307FFF03C4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "9.lambda_library", "9.lambda_library\9.lambda_library.vcxproj", "{A350CCBD-0A9D-4461-B54C-9161EB649101}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "9.lambda", "9.lambda\9.lambda.vcxproj", "{A350CCBD-0A9D-4461-B54C-9161EB649101}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
