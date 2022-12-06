@@ -13,7 +13,7 @@
 
 	不可以重载的运算符：
 		.
-		*		
+		*
 		->*
 		::
 		sizeof
@@ -50,7 +50,7 @@ namespace AssetHello
 
 	//定义函数体
 	void AssetHelloFunc() {}
-	CHello* GetHello();
+	CHello *GetHello();
 
 
 	class Mistream
@@ -80,57 +80,57 @@ namespace AssetHello
 			}
 		}
 
-		Mistream& Print_R()
+		Mistream &Print_R()
 		{
 			printf(mstr);
 			return *this;
 		}
 
-		Mistream& operator =(Mistream& p)
+		Mistream &operator =(Mistream &p)
 		{
-			mp = (char*)malloc(1024);
+			mp = (char *)malloc(1024);
 			strcpy(this->mp, p.mp);
 
 			return *this;
 		}
 
-		Mistream& operator =(const char* p)
+		Mistream &operator =(const char *p)
 		{
 			strcpy(mstr, p);
 			return *this;
 		}
 
-		Mistream& operator <<(const char* p)
+		Mistream &operator <<(const char *p)
 		{
 			printf(p);
 			return *this;
 		}
 
-		Mistream& operator <<(const int p)
+		Mistream &operator <<(const int p)
 		{
 			printf("%d", p);
 			return *this;
 		}
 
-		Mistream& operator <<(const Mistream& p)
+		Mistream &operator <<(const Mistream &p)
 		{
 			printf("\n");
 			return *this;
 		}
 
-		Mistream& operator ++(int)
+		Mistream &operator ++(int)
 		{
 			mi++;
 			return *this;
 		}
 
-		bool operator !=(const Mistream& p)
+		bool operator !=(const Mistream &p)
 		{
 			return this->mi != p.mi;
 		}
 
 	public:
-		char* mp; //拷贝时要注意，需要重新分配内存
+		char *mp; //拷贝时要注意，需要重新分配内存
 
 	private:
 		char mstr[1024];
@@ -144,7 +144,7 @@ namespace AssetHello
 
 namespace AssetHello
 {
-	CHello* GetHello()
+	CHello *GetHello()
 	{
 		return nullptr;
 	}
@@ -163,7 +163,7 @@ int main()
 	(AssetHello::mprintcount = "999").Print_R() << AssetHello::mendcount;
 
 	AssetHello::Mistream A, B;
-	A.mp = (char*)malloc(1024);
+	A.mp = (char *)malloc(1024);
 	strcpy(A.mp, "hello ==");
 	B = A;
 	B.Print();

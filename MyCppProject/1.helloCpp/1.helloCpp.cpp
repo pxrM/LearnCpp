@@ -13,12 +13,12 @@ struct FHello
 	int b;
 	long int c;
 };
-void Fun_Cpp(int& cpp, FHello& fh) // cpp支持传引用，c语言不支持
+void Fun_Cpp(int &cpp, FHello &fh) // cpp支持传引用，c语言不支持
 {
 	fh.a = 0;
 }
 
-void Fun_Ptr(FHello* fhPtr) //指针本身就是个对象，会占四个字节，使用指针传递参数会拷贝指针
+void Fun_Ptr(FHello *fhPtr) //指针本身就是个对象，会占四个字节，使用指针传递参数会拷贝指针
 {
 	fhPtr->a = 0;
 }

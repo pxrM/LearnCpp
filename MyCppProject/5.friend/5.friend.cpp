@@ -6,7 +6,7 @@
 class TestClass {
 	friend class Test2; //Test2类可以访问本类的所有信息
 public:
-	void TestFun(){}
+	void TestFun() {}
 
 private:
 	void TestFun1() {}
@@ -14,7 +14,7 @@ private:
 	void TestFun3() {}
 
 protected:
-	void TestFun4(){}
+	void TestFun4() {}
 };
 
 
@@ -42,13 +42,13 @@ public:
 	///		破坏了类的封装和隐蔽性
 	/// </summary>
 	/// <param name="t3"></param>
-	friend void Printf_F(Test3& t3) /*const*/ {
+	friend void Printf_F(Test3 &t3) /*const*/ {
 		t3.Print();
 		printf("%d \n", t3.b);
 		printf("%d \n", t3.a);
 	}
 
-	static void Printf_S(Test3& t3) {
+	static void Printf_S(Test3 &t3) {
 		t3.Print();
 		printf("%d \n", t3.b);
 		printf("%d \n", t3.a);

@@ -22,7 +22,7 @@ class Test1 :public TestSuper {
 public:
 	Test1();
 	Test1(int ia, int ib, int ic);
-	Test1(const Test1& test);
+	Test1(const Test1 &test);
 	~Test1();
 
 public:
@@ -30,7 +30,7 @@ public:
 	int b;
 	int c;
 
-	Test* test;
+	Test *test;
 };
 
 Test1::Test1()
@@ -52,7 +52,7 @@ Test1::Test1(int ia, int ib, int ic)
 	test = new Test();
 }
 
-Test1::Test1(const Test1& test)
+Test1::Test1(const Test1 &test)
 {
 	this->a = test.a;
 	this->b = test.b;
@@ -83,7 +83,7 @@ Test1::~Test1()
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-const Test1* thisPtr = nullptr; //每个类内部都会有这样的一个this指针
+const Test1 *thisPtr = nullptr; //每个类内部都会有这样的一个this指针
 
 //////////////////////////////////////////////////////////////////////////////////////
 
@@ -112,13 +112,13 @@ namespace AssetHello
 	};
 
 	//定义函数体
-	void AssetHelloFunc(){}
-	CHello* GetHello();
+	void AssetHelloFunc() {}
+	CHello *GetHello();
 }
 
-namespace AssetHello 
+namespace AssetHello
 {
-	CHello* GetHello()
+	CHello *GetHello()
 	{
 		return nullptr;
 	}
@@ -155,7 +155,7 @@ int main()
 		AssetHello::EA;
 		AssetHello::EHello::EA;
 
-		AssetHello::CHello* hPtr = new AssetHello::CHello();
+		AssetHello::CHello *hPtr = new AssetHello::CHello();
 		AssetHello::GetHello();
 
 		using namespace AssetHello;

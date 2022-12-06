@@ -26,7 +26,7 @@ struct StructTest :public StructTestSuper
 
 	int a;
 	float b;
-	void Func1(){}
+	void Func1() {}
 
 private:
 	int m1;
