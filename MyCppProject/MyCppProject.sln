@@ -21,9 +21,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "8.overloading_rewrite", "8.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "9.lambda", "9.lambda\9.lambda.vcxproj", "{A350CCBD-0A9D-4461-B54C-9161EB649101}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10.library", "10.library\10.library.vcxproj", "{8672A676-3240-40A2-BF5E-B1C9B9CB35EF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-9", "1-9", "{79AE7E33-6023-499A-A767-EB0238B23A0A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10.runlibrary", "10.runlibrary\10.runlibrary.vcxproj", "{5327AED8-6372-4FA3-8A10-0B70EBE09B85}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10.library_cpp", "10.library_cpp\10.library_cpp.vcxproj", "{8672A676-3240-40A2-BF5E-B1C9B9CB35EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +107,14 @@ Global
 		{A350CCBD-0A9D-4461-B54C-9161EB649101}.Release|x64.Build.0 = Release|x64
 		{A350CCBD-0A9D-4461-B54C-9161EB649101}.Release|x86.ActiveCfg = Release|Win32
 		{A350CCBD-0A9D-4461-B54C-9161EB649101}.Release|x86.Build.0 = Release|Win32
+		{5327AED8-6372-4FA3-8A10-0B70EBE09B85}.Debug|x64.ActiveCfg = Debug|x64
+		{5327AED8-6372-4FA3-8A10-0B70EBE09B85}.Debug|x64.Build.0 = Debug|x64
+		{5327AED8-6372-4FA3-8A10-0B70EBE09B85}.Debug|x86.ActiveCfg = Debug|Win32
+		{5327AED8-6372-4FA3-8A10-0B70EBE09B85}.Debug|x86.Build.0 = Debug|Win32
+		{5327AED8-6372-4FA3-8A10-0B70EBE09B85}.Release|x64.ActiveCfg = Release|x64
+		{5327AED8-6372-4FA3-8A10-0B70EBE09B85}.Release|x64.Build.0 = Release|x64
+		{5327AED8-6372-4FA3-8A10-0B70EBE09B85}.Release|x86.ActiveCfg = Release|Win32
+		{5327AED8-6372-4FA3-8A10-0B70EBE09B85}.Release|x86.Build.0 = Release|Win32
 		{8672A676-3240-40A2-BF5E-B1C9B9CB35EF}.Debug|x64.ActiveCfg = Debug|x64
 		{8672A676-3240-40A2-BF5E-B1C9B9CB35EF}.Debug|x64.Build.0 = Debug|x64
 		{8672A676-3240-40A2-BF5E-B1C9B9CB35EF}.Debug|x86.ActiveCfg = Debug|Win32
