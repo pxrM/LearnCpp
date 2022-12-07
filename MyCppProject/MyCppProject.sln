@@ -27,7 +27,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10.runlibrary", "10.runlibr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10.library_cpp", "10.library_cpp\10.library_cpp.vcxproj", "{8672A676-3240-40A2-BF5E-B1C9B9CB35EF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "11.library_c", "11.library_c\11.library_c.vcxproj", "{E836B930-BFEA-4DA1-AC4E-45FC6D579641}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10.library_c", "10.library_c\10.library_c.vcxproj", "{E836B930-BFEA-4DA1-AC4E-45FC6D579641}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
