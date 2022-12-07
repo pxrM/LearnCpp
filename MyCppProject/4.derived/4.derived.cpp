@@ -1,5 +1,9 @@
 /*
-	派生、继承、多继承、菱形继承问题、虚继承
+	·派生
+	·继承
+	·多继承
+	·菱形继承问题
+	·虚继承
 */
 
 #include <iostream>
@@ -140,8 +144,9 @@ public:
 
 class CharacteTwo :public ActorTwo, public ActorThree, public PhysicsTwo {
 public:
-
+	//ERR：菱形继承问题，找不到明确的目标，因为继承的ActorTwo、ActorThree都继承自ObjectTwo，所以它们都有这个函数
 };
+
 /////////////////////////////////////////////////////////
 
 
@@ -210,7 +215,7 @@ void main()
 	IsSimulate(&character);
 
 	CharacteTwo chTwo;
-	//chTwo.Destroy(); //ERR：找不到明确的目标，因为继承的ActorTwo、ActorThree都继承自ObjectTwo，所以它们都有这个函数
+	//chTwo.Destroy(); //ERR：菱形继承问题，找不到明确的目标，因为继承的ActorTwo、ActorThree都继承自ObjectTwo，所以它们都有这个函数
 
 	/////////////////////////////////////////////////////////
 
