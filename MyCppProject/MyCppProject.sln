@@ -29,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10.library_cpp", "10.librar
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10.library_c", "10.library_c\10.library_c.vcxproj", "{E836B930-BFEA-4DA1-AC4E-45FC6D579641}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "11.const_cast", "11.const_cast\11.const_cast.vcxproj", "{F6C31881-8453-4600-B3B3-3BEF52F1C311}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -133,6 +135,14 @@ Global
 		{E836B930-BFEA-4DA1-AC4E-45FC6D579641}.Release|x64.Build.0 = Release|x64
 		{E836B930-BFEA-4DA1-AC4E-45FC6D579641}.Release|x86.ActiveCfg = Release|Win32
 		{E836B930-BFEA-4DA1-AC4E-45FC6D579641}.Release|x86.Build.0 = Release|Win32
+		{F6C31881-8453-4600-B3B3-3BEF52F1C311}.Debug|x64.ActiveCfg = Debug|x64
+		{F6C31881-8453-4600-B3B3-3BEF52F1C311}.Debug|x64.Build.0 = Debug|x64
+		{F6C31881-8453-4600-B3B3-3BEF52F1C311}.Debug|x86.ActiveCfg = Debug|Win32
+		{F6C31881-8453-4600-B3B3-3BEF52F1C311}.Debug|x86.Build.0 = Debug|Win32
+		{F6C31881-8453-4600-B3B3-3BEF52F1C311}.Release|x64.ActiveCfg = Release|x64
+		{F6C31881-8453-4600-B3B3-3BEF52F1C311}.Release|x64.Build.0 = Release|x64
+		{F6C31881-8453-4600-B3B3-3BEF52F1C311}.Release|x86.ActiveCfg = Release|Win32
+		{F6C31881-8453-4600-B3B3-3BEF52F1C311}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
