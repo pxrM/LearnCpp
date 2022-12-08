@@ -9,6 +9,7 @@
 	·单例模板
 	·网络协议模板基础框架
 	·遍历任意参
+	·获取可变参数的数量
 */
 
 #include <iostream>
@@ -129,6 +130,7 @@ int main()
 	float par2 = 11.5;
 	char par3[] = "Hello";
 	FunTest(par1, par2, par3);
+	FunTestLen(par1, par2, par3);
 
 	return 0;
 }

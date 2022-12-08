@@ -104,3 +104,10 @@ void FunTest(ParamTypes &... Params)
 	char arr[] = { (PrintfArg(Params), 0)... }; //这里0表示占位，或者在PrintfArg函数加个返回值，这种方式会产生拷贝
 	char arr2[] = { (char)Params ... };
 }
+
+/////////////////////////// 获取可变参数的数量 ///////////////////////////
+template<typename ... ParamTypes>
+void FunTestLen(ParamTypes &... Params)
+{
+	cout << sizeof...(Params) << endl;
+}
