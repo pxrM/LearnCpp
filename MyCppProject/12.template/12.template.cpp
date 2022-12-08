@@ -8,7 +8,7 @@
 	·高级宏替换和类模板连用
 	·单例模板
 	·网络协议模板基础框架
-	·遍历任意参
+	·遍历任意参（展开方式和递归方式）
 	·获取可变参数的数量
 */
 
@@ -130,6 +130,7 @@ int main()
 	float par2 = 11.5;
 	char par3[] = "Hello";
 	FunTest(par1, par2, par3);
+	FunTest2(par1, par2, par3);
 	FunTestLen(par1, par2, par3);
 
 	return 0;

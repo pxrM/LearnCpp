@@ -90,7 +90,7 @@ DEFINE_CONTROL_CHANNEL_MESSAGE(Login, 1, int, char)
 
 
 
-/////////////////////////// 遍历任意参 ///////////////////////////
+/////////////////////////// 遍历任意参（展开方式） ///////////////////////////
 template<typename T>
 void PrintfArg(T &arg)
 {
@@ -103,6 +103,18 @@ void FunTest(ParamTypes &... Params)
 	// std::forward()
 	char arr[] = { (PrintfArg(Params), 0)... }; //这里0表示占位，或者在PrintfArg函数加个返回值，这种方式会产生拷贝
 	char arr2[] = { (char)Params ... };
+}
+
+/////////////////////////// 遍历任意参（递归方式） ///////////////////////////
+void FunTest2()
+{
+	cout << "没有了" << endl;
+}
+template<typename T, typename ... ParamTypes>
+void FunTest2(T &Head, ParamTypes &... Params)
+{
+	cout << "Head = " << Head << endl;
+	FunTest2(Params...);
 }
 
 /////////////////////////// 获取可变参数的数量 ///////////////////////////
