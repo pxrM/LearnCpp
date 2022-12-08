@@ -5,6 +5,7 @@
 	·什么是hpp文件
 	·模板继承
 	·模板使用多态
+	·高级宏替换
 */
 
 #include <iostream>
@@ -89,6 +90,13 @@ int main()
 	Hptr->Func(1, 6);
 	Hptr->Func(1);
 	
+
+	FMyClass<int> fmc;
+	fmc.Work();
+	FMyClassTwo<float> fmct;
+	fmct.Work();
+	FMyClassThree<int> fmcth;
+	fmcth.Work();
 
 	return 0;
 }

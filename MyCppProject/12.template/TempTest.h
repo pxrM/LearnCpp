@@ -111,11 +111,11 @@ template<typename T>
 class TempTestH
 {
 public:
-	virtual void Init() 
+	virtual void Init()
 	{
 		cout << "H::Init" << endl;
 	}
-	virtual void Destroy() 
+	virtual void Destroy()
 	{
 		cout << "H::Destroy" << endl;
 	}
@@ -150,3 +150,41 @@ public:
 		cout << "I::Destroy" << endl;
 	}
 };
+
+///////////////////////////////////////////////////////
+
+
+////////////////////// 高级宏替换 //////////////////////
+#define HELLO_CLASS(ClassName, Code)\
+template<class T> \
+class F##ClassName \
+{ \
+public: \
+	void Work() \
+	{ \
+		Code; \
+	} \
+private: \
+	T *Data; \
+};
+// 使用
+HELLO_CLASS(MyClass, cout << "MyClass" << endl;)
+HELLO_CLASS(MyClassTwo, {
+	cout << "666666666666666" << endl;
+	cout << "MyClassTwo" << endl;
+	})
+
+// 带任意参
+#define HELLO_CLASS_PARAM(ClassName, Code, Str, ...) \
+template<class T> \
+class F##ClassName \
+{ \
+public: \
+	void Work() \
+	{ \
+		Code; \
+		printf(#Str, __VA_ARGS__); \
+	} \
+};
+HELLO_CLASS_PARAM(MyClassThree, { cout << "MyClassThree" << endl; }, "%s 任意参", "----------")
+///////////////////////////////////////////////////////
