@@ -133,5 +133,14 @@ int main()
 	FunTest2(par1, par2, par3);
 	FunTestLen(par1, par2, par3);
 
+
+
+	int value1 = 1;
+	int value2 = 66;
+	int value3 = 3;
+	int value4 = 99;
+	int value = FuncValue(value1, value2, value3, value4);
+	cout << value << endl;
+
 	return 0;
 }

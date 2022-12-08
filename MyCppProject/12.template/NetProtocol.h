@@ -123,3 +123,15 @@ void FunTestLen(ParamTypes &... Params)
 {
 	cout << sizeof...(Params) << endl;
 }
+
+/////////////////////////// 通过可变参数特性求和 ///////////////////////////
+template <typename ParamTypes>
+ParamTypes &FuncValue(ParamTypes &Param)
+{
+	return Param;
+}
+template<typename T, typename ... ParamTypes>
+T FuncValue(T &Head, ParamTypes &... Params)
+{
+	return Head + FuncValue<T>(Params...);
+}
