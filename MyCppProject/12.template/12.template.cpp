@@ -5,11 +5,13 @@
 	·什么是hpp文件
 	·模板继承
 	·模板使用多态
-	·高级宏替换
+	·高级宏替换和类模板连用
+	·单例模板
 */
 
 #include <iostream>
 #include "TempTest.h"
+#include "SingletonPattern.h"
 
 using namespace std;
 
@@ -97,6 +99,15 @@ int main()
 	fmct.Work();
 	FMyClassThree<int> fmcth;
 	fmcth.Work();
+
+
+	MThreadTest *tttest = TTTest::Get();
+	tttest->Func();
+
+	MThreadTest_Two *Test_Two = Two::Get();
+	Test_Two->Func();
+	MThreadTest_Three *Test_Three = Three::Get();
+	Test_Three->Func();
 
 	return 0;
 }

@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelloHPP.hpp" />
+    <ClInclude Include="SingletonPattern.h" />
     <ClInclude Include="TempTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

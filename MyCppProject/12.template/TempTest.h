@@ -186,5 +186,5 @@ public: \
 		printf(#Str, __VA_ARGS__); \
 	} \
 };
-HELLO_CLASS_PARAM(MyClassThree, { cout << "MyClassThree" << endl; }, "%s 任意参", "----------")
+HELLO_CLASS_PARAM(MyClassThree, { cout << "MyClassThree" << endl; }, "%s 任意参----------", "----------")
 ///////////////////////////////////////////////////////
