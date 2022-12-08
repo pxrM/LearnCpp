@@ -21,6 +21,9 @@
     <ClCompile Include="TempTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="NetProtocol.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TempTest.h">
@@ -30,6 +33,9 @@
       <Filter>源文件</Filter>
     </ClInclude>
     <ClInclude Include="SingletonPattern.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NetProtocol.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

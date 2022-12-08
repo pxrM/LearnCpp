@@ -140,10 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="12.template.cpp" />
+    <ClCompile Include="NetProtocol.cpp" />
     <ClCompile Include="TempTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelloHPP.hpp" />
+    <ClInclude Include="NetProtocol.h" />
     <ClInclude Include="SingletonPattern.h" />
     <ClInclude Include="TempTest.h" />
   </ItemGroup>

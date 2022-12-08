@@ -7,11 +7,13 @@
 	·模板使用多态
 	·高级宏替换和类模板连用
 	·单例模板
+	·网络协议模板基础框架
 */
 
 #include <iostream>
 #include "TempTest.h"
 #include "SingletonPattern.h"
+#include "NetProtocol.h"
 
 using namespace std;
 
@@ -108,6 +110,17 @@ int main()
 	Test_Two->Func();
 	MThreadTest_Three *Test_Three = Three::Get();
 	Test_Three->Func();
+
+
+
+	// 客户端
+	int sa = 0;
+	float sf = 1.0;
+	char sc;
+	NetControlMessage<NMT_Enter>::Send(sa, sf, sc);
+	NetControlMessage<NMT_Login>::Send(sa, sc);
+	//服务端
+	NetControlMessage<NMT_Enter>::Receive(sa, sf, sc);
 
 	return 0;
 }
