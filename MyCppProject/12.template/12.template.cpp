@@ -8,6 +8,7 @@
 	·高级宏替换和类模板连用
 	·单例模板
 	·网络协议模板基础框架
+	·遍历任意参
 */
 
 #include <iostream>
@@ -121,6 +122,13 @@ int main()
 	NetControlMessage<NMT_Login>::Send(sa, sc);
 	//服务端
 	NetControlMessage<NMT_Enter>::Receive(sa, sf, sc);
+
+
+
+	int par1 = 10;
+	float par2 = 11.5;
+	char par3[] = "Hello";
+	FunTest(par1, par2, par3);
 
 	return 0;
 }

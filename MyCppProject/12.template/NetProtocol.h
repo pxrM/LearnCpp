@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include <iostream>
+
+using namespace std;
 
 typedef unsigned char uint8;
 
@@ -58,6 +61,7 @@ public:
 	}
 };
 */
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define DEFINE_CONTROL_CHANNEL_MESSAGE(Name, Index, ...) \
@@ -83,3 +87,20 @@ public: \
 //定义协议行为
 DEFINE_CONTROL_CHANNEL_MESSAGE(Enter, 0, int, float, char)
 DEFINE_CONTROL_CHANNEL_MESSAGE(Login, 1, int, char)
+
+
+
+/////////////////////////// 遍历任意参 ///////////////////////////
+template<typename T>
+void PrintfArg(T &arg)
+{
+	cout << arg << endl;
+}
+
+template<typename ... ParamTypes>
+void FunTest(ParamTypes &... Params)
+{
+	// std::forward()
+	char arr[] = { (PrintfArg(Params), 0)... }; //这里0表示占位，或者在PrintfArg函数加个返回值，这种方式会产生拷贝
+	char arr2[] = { (char)Params ... };
+}
