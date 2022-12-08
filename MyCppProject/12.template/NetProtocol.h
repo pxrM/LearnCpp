@@ -135,3 +135,12 @@ T FuncValue(T &Head, ParamTypes &... Params)
 {
 	return Head + FuncValue<T>(Params...);
 }
+
+/////////////////////////// 什么是模板泛化：当前所有模板参数都未定义，只有等到使用的时候知道 ///////////////////////////
+template<class T1, class T2>
+class TempTest
+{
+private:
+	T1 Data1;
+	T2 Data2;
+};
