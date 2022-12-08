@@ -90,6 +90,8 @@ DEFINE_CONTROL_CHANNEL_MESSAGE(Login, 1, int, char)
 
 
 
+
+
 /////////////////////////// 遍历任意参（展开方式） ///////////////////////////
 template<typename T>
 void PrintfArg(T &arg)
@@ -158,3 +160,29 @@ void FuncTempTest()
 
 template<>
 void FuncTempTest<int>(){}
+
+/////////////////////////// 模板偏特化（函数没有偏特化） ///////////////////////////
+//通过模板偏特化来获取可变参数的字节大小
+template<typename T, class ...ParamTypes>
+class TempTestLen
+{
+public:
+	enum
+	{
+		Num = TempTestLen<T>::Num + TempTestLen<ParamTypes...>::Num,
+	};
+};
+
+//偏特化
+template<typename Last>
+class TempTestLen<Last>
+{
+public:
+	enum
+	{
+		Num = sizeof(Last),
+	};
+}; 
+
+#define TEMP_TEST_LEN(Name, ...) TempTestLen<__VA_ARGS__> Name
+
