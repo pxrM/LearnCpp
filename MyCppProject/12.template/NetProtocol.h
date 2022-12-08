@@ -138,9 +138,23 @@ T FuncValue(T &Head, ParamTypes &... Params)
 
 /////////////////////////// 什么是模板泛化：当前所有模板参数都未定义，只有等到使用的时候知道 ///////////////////////////
 template<class T1, class T2>
-class TempTest
+class TempTest_Two
 {
 private:
 	T1 Data1;
 	T2 Data2;
 };
+
+/////////////////////////// 什么是模板全特化：给定一个确定的类型，前提是要有个泛化的模板 ///////////////////////////
+template<>
+class TempTest_Two<int, float>
+{
+};
+
+template<class T>
+void FuncTempTest()
+{
+}
+
+template<>
+void FuncTempTest<int>(){}
