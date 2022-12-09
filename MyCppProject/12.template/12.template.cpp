@@ -299,5 +299,11 @@ int main()
 
 	conditional<true, int, float>::type conditionalTest = 100; // 第一个参数是true，那么conditionalTest的类型就是int，否则为false
 
+	decay<int &>::type A1;	//int
+	decay<int &&>::type A2; //int
+	decay<const int>::type A3; //int
+	decay<int[100]>::type A4; //int*
+	decay<int(int)>::type A5;	//int(*)(int)
+
 	return 0;
 }
