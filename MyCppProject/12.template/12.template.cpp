@@ -16,6 +16,8 @@
 	·通过模板偏特化来获取可变参数的字节大小
 	·通过模板循环继承方式展开可变参数
 	·通过using循环命名的方式展开可变参数
+
+	·通过工厂来构建任意参数对象
 */
 
 #include <iostream>
@@ -169,8 +171,34 @@ int main()
 	//struct HelloIndex<0,1,2>
 
 
+
 	using SpawnIndex_Alias_Two = SpawnIndex_Two<3>::MType_Two;
 	cout <<  "using：" << typeid(SpawnIndex_Alias_Two).name() << endl;
+
+
+
+	SpawnIndex<3>::MType *CreateTest1 = CreateObject_NoParam<SpawnIndex<3>::MType>();
+	if (CreateTest1)
+	{
+		cout << "CreateTest1" << endl;
+		delete CreateTest1;
+		CreateTest1 = nullptr;
+	}
+	COTestA *cota = CreateObject<COTestA>();
+	if (cota)
+	{
+		cout << "COTestA" << endl;
+		delete cota;
+		cota = nullptr;
+	}
+	COTestB *cotb = CreateObject<COTestB>(1, 2);
+	if (cotb)
+	{
+		cout << "COTestB" << endl;
+		delete cotb;
+		cotb = nullptr;
+	}
+
 
 	return 0;
 }

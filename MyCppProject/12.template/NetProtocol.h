@@ -217,3 +217,40 @@ struct SpawnIndex_Two<0, ParamTypes...>
 {
 	typedef SpawnIndex_Two<ParamTypes...> MType_Two;
 };
+
+/////////////////////////// 通过工厂来构建任意参数对象 ///////////////////////////
+template<class T>
+T *CreateObject_NoParam()
+{
+	return new T();
+}
+
+template<class T, typename Arg0>
+T *CreateObject_OneParam()
+{
+	return new T(Arg0);
+}
+
+template<class T, typename Arg0, typename Arg1>
+T *CreateObject_TwoParam()
+{
+	return new T(Arg0, Arg1);
+}
+
+template<class T, typename ...ParamTypes>
+T *CreateObject(ParamTypes &&...Param)
+{
+	return new T(std::forward<ParamTypes>(Param)...); //使用std::forward避免拷贝
+}
+
+struct COTestA
+{
+};
+
+struct COTestB {
+public:
+	COTestB(int a, int b)
+	{
+
+	}
+};
