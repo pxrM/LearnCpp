@@ -292,6 +292,10 @@ int main()
 	cout << "是否是整形或浮点型：" << is_arithmetic<float>::value << endl;
 	cout << "是否是抽象类：" << is_abstract<MyStructTest>::value << endl;
 	cout << "是否是抽象类：" << is_abstract<MyStructTest2>::value << endl;
+	cout << is_same<int &, int>::value << endl;
+	cout << is_same<int &, add_lvalue_reference<int>::type>::value << endl; //add_lvalue_reference 添加引用
+	cout << is_same<int, const int>::value << endl;
+	cout << is_same<int, remove_const<const int>::type>::value << endl;
 
 	return 0;
 }
