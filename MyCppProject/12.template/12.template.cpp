@@ -24,18 +24,22 @@
 */
 
 #include <iostream>
+#include <type_traits> //模板元编程库
+#include <vector>
+
 #include "TempTest.h"
 #include "SingletonPattern.h"
 #include "NetProtocol.h"
 #include "TemplateElement.h"
 
+
 using namespace std;
 
 
 template<class T>
-class MVector 
+class MVector
 {
-public: 
+public:
 	const T *operator[](int index) const {
 		return &Data[index];
 	}
@@ -74,6 +78,35 @@ void Printf_Arr(const MVector<T> &iarr)
 }
 
 
+struct MyStructTest
+{
+	void MyStructTestAA()
+	{
+
+	}
+
+	virtual void MyStructTestBB()
+	{
+
+	}
+};
+
+struct MyStructTest2
+{
+	void MyStructTestAA()
+	{
+
+	}
+
+	virtual void MyStructTestBB() = 0;
+
+};
+
+enum MyEnumTest
+{
+
+};
+
 
 
 
@@ -107,7 +140,9 @@ int main()
 	Hptr->Destroy();
 	Hptr->Func(1, 6);
 	Hptr->Func(1);
-	
+
+
+
 
 	FMyClass<int> fmc;
 	fmc.Work();
@@ -117,6 +152,8 @@ int main()
 	fmcth.Work();
 
 
+
+
 	MThreadTest *tttest = TTTest::Get();
 	tttest->Func();
 
@@ -124,6 +161,7 @@ int main()
 	Test_Two->Func();
 	MThreadTest_Three *Test_Three = Three::Get();
 	Test_Three->Func();
+
 
 
 
@@ -138,12 +176,14 @@ int main()
 
 
 
+
 	int par1 = 10;
 	float par2 = 11.5;
 	char par3[] = "Hello";
 	FunTest(par1, par2, par3);
 	FunTest2(par1, par2, par3);
 	FunTestLen(par1, par2, par3);
+
 
 
 
@@ -155,10 +195,12 @@ int main()
 	cout << value << endl;
 
 
+
 	//TempTestLen<int, int, int, int> TempTestLen;
 	//cout << TempTestLen.Num << endl;
 	TEMP_TEST_LEN(TempTestLen, int, int, int, int);
 	cout << TempTestLen.Num << endl;
+
 
 
 
@@ -177,7 +219,8 @@ int main()
 
 
 	using SpawnIndex_Alias_Two = SpawnIndex_Two<3>::MType_Two;
-	cout <<  "using：" << typeid(SpawnIndex_Alias_Two).name() << endl;
+	cout << "using：" << typeid(SpawnIndex_Alias_Two).name() << endl;
+
 
 
 
@@ -205,6 +248,7 @@ int main()
 
 
 
+
 	COTestC *cotc = CreateObject<COTestC>();
 	auto newFunc = CreateMDelegate(cotc, &COTestC::Print);
 	newFunc(1, 9);
@@ -219,9 +263,35 @@ int main()
 	remConst1 = 10;
 
 	bool issame1 = isSame<int, int>::value;
-	cout << "isSame：" << (issame1 ? "True" : "False") << endl;
+	cout << "isSame 是否是同类型：" << (issame1 ? "True" : "False") << endl;
 	issame1 = isSame<int, float>::value;
-	cout << "isSame：" << (issame1 ? "True" : "False") << endl;
+	cout << "isSame 是否是同类型：" << (issame1 ? "True" : "False") << endl;
+
+
+
+
+
+	cout << "是否是同类型：" << is_same<int, float>::value << endl;
+	cout << "TestA 是否是类或结构体：" << is_class<TestA>::value << endl;
+	cout << "MyStructTest 是否是类或结构体：" << is_class<MyStructTest>::value << endl;
+	cout << "int 是否是类或结构体：" << is_class<int>::value << endl;
+	cout << "MyEnumTest 是否是枚举：" << is_enum<MyEnumTest>::value << endl;
+	cout << "是否是整形：" << is_integral<int>::value << endl;
+	cout << "是否是float：" << is_floating_point<float>::value << endl;
+	cout << "是否是指针：" << is_pointer<float *>::value << endl;
+	cout << "是否是左值：" << is_lvalue_reference<float &>::value << endl;
+	cout << "是否是右值：" << is_rvalue_reference<float &&>::value << endl;
+	cout << "是否是函数：" << is_function<float>::value << endl;
+	cout << "是否是函数：" << is_function<void(int, int)>::value << endl;
+	cout << "是否是函数：" << is_function<void(...)>::value << endl;
+	cout << "是否是成员函数：" << is_member_function_pointer<int(MyStructTest::*)()>::value << endl;
+	cout << "是否是成员指针：" << is_member_object_pointer<int(MyStructTest:: *)>::value << endl;
+	cout << "是否是数组：" << is_array<int[]>::value << endl;
+	cout << "是否是数组：" << is_array<vector<int>>::value << endl;
+	cout << "是否是整形或浮点型：" << is_arithmetic<int>::value << endl;
+	cout << "是否是整形或浮点型：" << is_arithmetic<float>::value << endl;
+	cout << "是否是抽象类：" << is_abstract<MyStructTest>::value << endl;
+	cout << "是否是抽象类：" << is_abstract<MyStructTest2>::value << endl;
 
 	return 0;
 }

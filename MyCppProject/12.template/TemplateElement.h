@@ -1,5 +1,5 @@
 /*
-	模板元编程
+	简单的模板元编程例子
 */
 
 #pragma once
@@ -8,6 +8,8 @@
 
 using namespace std;
 
+
+////////////////////////////////////////////////////////////////////////
 
 // 通过模板定义一个值
 template<class T, T v>
@@ -42,3 +44,5 @@ constexpr bool isSame_V < T1, T1 > = true;
 
 template<class T1, class T2>
 struct isSame :bool_temp<isSame_V<T1, T2>> {};
+
+////////////////////////////////////////////////////////////////////////
