@@ -297,5 +297,7 @@ int main()
 	cout << is_same<int, const int>::value << endl;
 	cout << is_same<int, remove_const<const int>::type>::value << endl;
 
+	conditional<true, int, float>::type conditionalTest = 100; // 第一个参数是true，那么conditionalTest的类型就是int，否则为false
+
 	return 0;
 }
