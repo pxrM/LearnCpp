@@ -19,12 +19,15 @@
 
 	·通过工厂来构建任意参数对象
 	·支持任意参数的简单代理
+
+	·模板元编程
 */
 
 #include <iostream>
 #include "TempTest.h"
 #include "SingletonPattern.h"
 #include "NetProtocol.h"
+#include "TemplateElement.h"
 
 using namespace std;
 
@@ -205,6 +208,20 @@ int main()
 	COTestC *cotc = CreateObject<COTestC>();
 	auto newFunc = CreateMDelegate(cotc, &COTestC::Print);
 	newFunc(1, 9);
+
+
+
+
+	int consti = ConstTest<int, 99999>::value;
+	cout << "ConstTest" << consti << endl;
+
+	RemoveConst<const int>::Type remConst1;
+	remConst1 = 10;
+
+	bool issame1 = isSame<int, int>::value;
+	cout << "isSame：" << (issame1 ? "True" : "False") << endl;
+	issame1 = isSame<int, float>::value;
+	cout << "isSame：" << (issame1 ? "True" : "False") << endl;
 
 	return 0;
 }

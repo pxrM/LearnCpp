@@ -147,6 +147,7 @@
     <ClInclude Include="HelloHPP.hpp" />
     <ClInclude Include="NetProtocol.h" />
     <ClInclude Include="SingletonPattern.h" />
+    <ClInclude Include="TemplateElement.h" />
     <ClInclude Include="TempTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

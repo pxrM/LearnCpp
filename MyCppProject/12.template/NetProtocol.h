@@ -303,7 +303,7 @@ public:
 
 	int Print(int a, int b)
 	{
-		printf("%i, %i", a, b);
+		printf("%i, %i \n", a, b);
 		return a + b;
 	}
 };
