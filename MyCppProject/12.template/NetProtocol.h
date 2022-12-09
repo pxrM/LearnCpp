@@ -254,3 +254,45 @@ public:
 
 	}
 };
+
+/////////////////////////// 支持任意参数的简单代理 ///////////////////////////
+template<class TObjectType, class TReturn, typename ...ParamTypes>
+class MDelegate
+{
+public:
+	MDelegate(TObjectType *InObj, TReturn(TObjectType:: *InFunc)(ParamTypes...))
+		:Object(InObj)
+		, Funcation(InFunc)
+	{
+	}
+
+	//重载()操作符
+	TReturn operator()(ParamTypes &&...Param)
+	{
+		return (Object->*Funcation)(std::forward<ParamTypes>(Param)...);
+	}
+
+private:
+	TObjectType *Object;
+	TReturn(TObjectType:: *Funcation)(ParamTypes...);
+};
+
+template<class TObjectType, class TReturn, typename ...ParamTypes>
+MDelegate<TObjectType, TReturn, ParamTypes...>CreateMDelegate(TObjectType *InObj, TReturn(TObjectType:: *InFunc)(ParamTypes...))
+{
+	return MDelegate<TObjectType, TReturn, ParamTypes...>(InObj, InFunc);
+}
+
+struct COTestC {
+public:
+	COTestC()
+	{
+
+	}
+
+	int Print(int a, int b)
+	{
+		printf("%i, %i", a, b);
+		return a + b;
+	}
+};

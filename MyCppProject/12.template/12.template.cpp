@@ -18,6 +18,7 @@
 	·通过using循环命名的方式展开可变参数
 
 	·通过工厂来构建任意参数对象
+	·支持任意参数的简单代理
 */
 
 #include <iostream>
@@ -199,6 +200,11 @@ int main()
 		cotb = nullptr;
 	}
 
+
+
+	COTestC *cotc = CreateObject<COTestC>();
+	auto newFunc = CreateMDelegate(cotc, &COTestC::Print);
+	newFunc(1, 9);
 
 	return 0;
 }
