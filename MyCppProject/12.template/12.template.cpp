@@ -13,6 +13,7 @@
 	·什么是模板泛化：当前所有模板参数都未定义，只有等到使用的时候知道
 	·什么是模板全特化：给定一个确定的类型，前提是要有个泛化的模板
 	·通过模板偏特化来获取可变参数的字节大小
+	·通过模板循环继承方式展开可变参数
 */
 
 #include <iostream>
@@ -150,6 +151,20 @@ int main()
 	//cout << TempTestLen.Num << endl;
 	TEMP_TEST_LEN(TempTestLen, int, int, int, int);
 	cout << TempTestLen.Num << endl;
+
+
+
+	using Int_Alias = int;
+	cout << "类型 = " << typeid(Int_Alias).name() << endl;
+	//using SpawnIndex_Alias = SpawnIndex<10>::MType;
+	//cout << typeid(SpawnIndex_Alias).name() << endl;
+	using SpawnIndex_Alias = SpawnIndex<3>::MType;
+	cout << typeid(SpawnIndex_Alias).name() << endl;	//struct HelloIndex<0,1,2>
+	//SpawnIndex<3>::MType;
+	//struct SpawnIndex :SpawnIndex<2, 2>
+	//struct SpawnIndex<2, 2> :SpawnIndex<1, 1, 2>
+	//struct SpawnIndex<1, 1, 2> :SpawnIndex<0, 0, 1, 2>
+	//struct HelloIndex<0,1,2>
 
 	return 0;
 }

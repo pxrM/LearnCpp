@@ -186,3 +186,22 @@ public:
 
 #define TEMP_TEST_LEN(Name, ...) TempTestLen<__VA_ARGS__> Name
 
+/////////////////////////// 通过模板循环继承方式展开可变参数 ///////////////////////////
+template<int ...>
+struct HelloIndex
+{
+
+};
+
+template<int N, int...ParamTypes>
+struct SpawnIndex :SpawnIndex<N - 1, N - 1, ParamTypes...>
+{
+
+};
+
+template<int...ParamTypes>
+struct SpawnIndex<0, ParamTypes...>
+{
+	typedef HelloIndex<ParamTypes...> MType;
+};
+
