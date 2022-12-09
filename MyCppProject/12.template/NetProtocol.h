@@ -159,7 +159,7 @@ void FuncTempTest()
 }
 
 template<>
-void FuncTempTest<int>(){}
+void FuncTempTest<int>() {}
 
 /////////////////////////// 模板偏特化（函数没有偏特化） ///////////////////////////
 //通过模板偏特化来获取可变参数的字节大小
@@ -182,7 +182,7 @@ public:
 	{
 		Num = sizeof(Last),
 	};
-}; 
+};
 
 #define TEMP_TEST_LEN(Name, ...) TempTestLen<__VA_ARGS__> Name
 
@@ -205,3 +205,15 @@ struct SpawnIndex<0, ParamTypes...>
 	typedef HelloIndex<ParamTypes...> MType;
 };
 
+/////////////////////////// 通过using循环命名的方式展开可变参数 ///////////////////////////
+template<int N, int ... ParamTypes>
+struct SpawnIndex_Two
+{
+	using MType_Two = typename SpawnIndex_Two<N - 1, N - 1, ParamTypes...>::MType_Two;
+};
+//循环终止
+template<int...ParamTypes>
+struct SpawnIndex_Two<0, ParamTypes...>
+{
+	typedef SpawnIndex_Two<ParamTypes...> MType_Two;
+};

@@ -8,12 +8,14 @@
 	·高级宏替换和类模板连用
 	·单例模板
 	·网络协议模板基础框架
+
 	·遍历任意参（展开方式和递归方式）
 	·获取可变参数的数量
 	·什么是模板泛化：当前所有模板参数都未定义，只有等到使用的时候知道
 	·什么是模板全特化：给定一个确定的类型，前提是要有个泛化的模板
 	·通过模板偏特化来获取可变参数的字节大小
 	·通过模板循环继承方式展开可变参数
+	·通过using循环命名的方式展开可变参数
 */
 
 #include <iostream>
@@ -165,6 +167,10 @@ int main()
 	//struct SpawnIndex<2, 2> :SpawnIndex<1, 1, 2>
 	//struct SpawnIndex<1, 1, 2> :SpawnIndex<0, 0, 1, 2>
 	//struct HelloIndex<0,1,2>
+
+
+	using SpawnIndex_Alias_Two = SpawnIndex_Two<3>::MType_Two;
+	cout <<  "using：" << typeid(SpawnIndex_Alias_Two).name() << endl;
 
 	return 0;
 }
