@@ -1,3 +1,10 @@
+/*
+	模板继承
+	模板虚继承
+	模板使用多态
+	高级宏替换
+*/
+
 #pragma once
 #include <iostream>
 
