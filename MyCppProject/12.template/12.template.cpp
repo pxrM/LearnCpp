@@ -16,6 +16,8 @@
 	·通过模板偏特化来获取可变参数的字节大小
 	·通过模板循环继承方式展开可变参数
 	·通过using循环命名的方式展开可变参数
+	·通过模板求最大整数
+	·通过模板求内存对齐
 
 	·通过工厂来构建任意参数对象
 	·支持任意参数的简单代理
@@ -305,7 +307,7 @@ int main()
 	cout << "是否是函数：" << is_function<float>::value << endl;
 	cout << "是否是函数：" << is_function<void(int, int)>::value << endl;
 	cout << "是否是函数：" << is_function<void(...)>::value << endl;
-	cout << "是否是成员函数：" << is_member_function_pointer<int(MyStructTest::*)()>::value << endl;
+	cout << "是否是成员函数：" << is_member_function_pointer<int(MyStructTest:: *)()>::value << endl;
 	cout << "是否是成员指针：" << is_member_object_pointer<int(MyStructTest:: *)>::value << endl;
 	cout << "是否是数组：" << is_array<int[]>::value << endl;
 	cout << "是否是数组：" << is_array<vector<int>>::value << endl;
@@ -342,13 +344,13 @@ int main()
 
 	// 表达式不能是左值
 	// err (iaa + ibb) = iaa + 1; iaa++ = ibb + 1;
-	
+
 	// 常量不能做左值
 	// 100 = 1;
-	
+
 	// 左值引用和右值引用
 	int &lefeA = iaa;			//左值引用  不能做带有表达式的操作  
-	int &&rightB = ibb +100;	//右值引用  不能直接引用  一般用在临时变量的地方
+	int &&rightB = ibb + 100;	//右值引用  不能直接引用  一般用在临时变量的地方
 
 	cout << lefeA << " ----  " << rightB << endl;
 
@@ -361,6 +363,26 @@ int main()
 	int iaaaa = static_cast<int>(cct);
 	int iaaaaa = cct.operator CompileConstTest::value_type();
 	cout << iaaa << " ----  " << iaaaa << " ----  " << iaaaaa << " ----  " << endl;
+
+
+
+	cout << IntMax<1, 6, 66, 7, 89, 5454, 55, 10000001>::value << endl;
+
+
+
+
+	struct MyStructAA
+	{
+		int a;
+		int b;
+		double dd;
+		float cc;
+	};
+
+	int neicunduiqi = alignof(MyStructAA);
+	cout << "内存对齐1：" << neicunduiqi << endl;
+	cout << "内存对齐2：" << MaxAlign<char, int, float, long, long long>::value << endl;
+
 
 	return 0;
 }

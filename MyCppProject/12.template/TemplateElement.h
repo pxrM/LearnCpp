@@ -46,3 +46,28 @@ template<class T1, class T2>
 struct isSame :bool_temp<isSame_V<T1, T2>> {};
 
 ////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////// 求最大整数  //////////////////////////////////
+template<int a, int ...args>
+struct IntMax;
+
+template<int a>
+struct IntMax<a> :std::integral_constant<int, a>
+{
+
+};
+
+template<int a1, int a2, int ...args>
+struct IntMax<a1, a2, args...> :std::integral_constant<int, (a1 >= a2) ? IntMax<a1, args...>::value : IntMax<a2, args...>::value>
+{
+
+};
+
+
+////////////////////////////////// 求内存对齐  //////////////////////////////////
+template<typename ...args>
+struct MaxAlign :std::integral_constant<int, IntMax<std::alignment_of<args>::value...>::value>
+{
+
+};
