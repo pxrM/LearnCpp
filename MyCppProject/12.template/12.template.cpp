@@ -21,6 +21,10 @@
 	·支持任意参数的简单代理
 
 	·模板元编程
+	·左值和右值（以等号作为判断，=的左边和右边）
+	·左值引用（不能做带有表达式的操作） 右值引用（不能直接引用  一般用在临时变量的地方）
+	·表达式不能是左值
+	·常量不能做左值
 */
 
 #include <iostream>
@@ -326,6 +330,25 @@ int main()
 	auto enableifTest = Func_Enableif_Test(1);
 	TempTestE testEE;
 	auto enableifTest2 = Func_Enableif_Test(testEE);
+
+
+
+
+	//左值和右值（以等号作为判断，=的左边和右边）
+	int iaa = 0, ibb = 1;
+	iaa = ibb + 1;	//iaa是左值，ibb是右值
+
+	// 表达式不能是左值
+	// err (iaa + ibb) = iaa + 1; iaa++ = ibb + 1;
+	
+	// 常量不能做左值
+	// 100 = 1;
+	
+	// 左值引用和右值引用
+	int &lefeA = iaa;			//左值引用  不能做带有表达式的操作  
+	int &&rightB = ibb +100;	//右值引用  不能直接引用  一般用在临时变量的地方
+
+	cout << lefeA << " ----  " << rightB << endl;
 
 	return 0;
 }
