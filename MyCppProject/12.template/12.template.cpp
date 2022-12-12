@@ -109,6 +109,13 @@ enum MyEnumTest
 
 
 
+template<class T>
+typename std::enable_if<std::is_arithmetic<T>::value, T>::type Func_Enableif_Test(T f)
+{
+	return f;
+}
+
+
 
 int main()
 {
@@ -304,6 +311,12 @@ int main()
 	decay<const int>::type A3; //int
 	decay<int[100]>::type A4; //int*
 	decay<int(int)>::type A5;	//int(*)(int)
+
+
+
+	// 限定模板类型为数字
+	auto enableifTest = Func_Enableif_Test(1);
+	//auto enableifTest = Func_Enableif_Test(MyStructTest2);
 
 	return 0;
 }
