@@ -25,6 +25,8 @@
 	·左值引用（不能做带有表达式的操作） 右值引用（不能直接引用  一般用在临时变量的地方）
 	·表达式不能是左值
 	·常量不能做左值
+
+	·std::integral_constant 定义预编译期的常量
 */
 
 #include <iostream>
@@ -349,6 +351,16 @@ int main()
 	int &&rightB = ibb +100;	//右值引用  不能直接引用  一般用在临时变量的地方
 
 	cout << lefeA << " ----  " << rightB << endl;
+
+
+
+
+	typedef std::integral_constant<int, 100>::type CompileConstTest;
+	CompileConstTest cct;
+	int iaaa = cct;
+	int iaaaa = static_cast<int>(cct);
+	int iaaaaa = cct.operator CompileConstTest::value_type();
+	cout << iaaa << " ----  " << iaaaa << " ----  " << iaaaaa << " ----  " << endl;
 
 	return 0;
 }
