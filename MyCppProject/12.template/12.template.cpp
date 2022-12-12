@@ -109,8 +109,16 @@ enum MyEnumTest
 
 
 
+// T只允许数值类型 
 template<class T>
 typename std::enable_if<std::is_arithmetic<T>::value, T>::type Func_Enableif_Test(T f)
+{
+	return f;
+}
+
+// T只允许非数值类型 
+template<class T>
+typename std::enable_if<!std::is_arithmetic<T>::value, T>::type Func_Enableif_Test(T f)
 {
 	return f;
 }
@@ -316,7 +324,8 @@ int main()
 
 	// 限定模板类型为数字
 	auto enableifTest = Func_Enableif_Test(1);
-	//auto enableifTest = Func_Enableif_Test(MyStructTest2);
+	TempTestE testEE;
+	auto enableifTest2 = Func_Enableif_Test(testEE);
 
 	return 0;
 }
