@@ -18,6 +18,8 @@
 	·std::overflow_error（数学溢出）
 	·std::range_error（容器超出范围）
 	·std::underflow_error（数学下溢）
+
+	·typeid（获取表达式类型信息）
 */
 
 #define _CRT_SECURE_NO_WARNINGS
@@ -55,6 +57,17 @@ int main()
 	TempBB tb;
 	TempAA<int> *ta = &tb;
 	ta->Init();
+
+	//name 类型名字
+	//raw_name 名字编码，算法产出
+	//hash_code	id
+	int aaaa = 10;
+	const type_info &info = typeid(aaaa);
+	cout << "name = " << info.name() << "   raw_name = " << info.raw_name() << "   hash_code = " << info.hash_code() << endl;
+	const type_info &info2 = typeid(tb);
+	cout << "name = " << info2.name() << "   raw_name = " << info2.raw_name() << "   hash_code = " << info2.hash_code() << endl;
+	const type_info &info3 = typeid(10 * 20 / 100);
+	cout << "name = " << info3.name() << "   raw_name = " << info3.raw_name() << "   hash_code = " << info3.hash_code() << endl;
 
 
 	int b = 10;
