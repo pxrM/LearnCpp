@@ -3,6 +3,21 @@
 	·异常处理
 	·封装任意参数到output
 	·自定义任意异常处理类
+
+	·std::exception
+	·std::bad_alloc（使用new失败会通过这个抛出异常）
+	·std::bad_cast（dynamic_cast异常）
+	·std::bad_exception（处理c++程序中无法预测的对象）
+	·std::bad_tyoeid（typeid()）
+	·std::logic_error（逻辑出错）
+	·std::domain_error（无效的数据域）
+	·std::invalid_argument（无效的参数）
+	·std::length_error（string长度）
+	·std::out_of_range（vector超出一定范围）
+	·std::runtime_error（读取代码时出现的错误）
+	·std::overflow_error（数学溢出）
+	·std::range_error（容器超出范围）
+	·std::underflow_error（数学下溢）
 */
 
 #define _CRT_SECURE_NO_WARNINGS
