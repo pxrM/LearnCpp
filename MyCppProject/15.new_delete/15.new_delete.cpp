@@ -45,7 +45,7 @@ public:
 		cout << "MyObj3 ´´½¨" << endl;
 	}
 
-	 ~MyObj3()
+	~MyObj3()
 	{
 		cout << "MyObj3 Îö¹¹" << endl;
 	}
@@ -66,6 +66,34 @@ public:
 };
 
 
+template<class T>
+class PreDistribution
+{
+public:
+	PreDistribution(int count) :Len(count)
+	{
+		Data = new T[count];
+	}
+
+	~PreDistribution()
+	{
+		delete[] Data;
+	}
+
+	T *operator[](int index)
+	{
+		return &Data[index];
+	}
+
+	inline int GetLen()
+	{
+		return Len;
+	}
+
+private:
+	T *Data;
+	int Len;
+};
 
 
 int main()
@@ -126,6 +154,11 @@ int main()
 		delete[] three[i];
 	}
 	delete[] three;
+
+
+
+	PreDistribution<MyObj> pre(1024);
+	MyObj *momo = pre[10];
 
 	return 0;
 }
