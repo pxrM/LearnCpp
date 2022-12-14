@@ -9,6 +9,8 @@
 	string
 
 	map
+
+	双向链表
 */
 
 #include <iostream>
@@ -18,6 +20,20 @@
 #include <map>
 
 using namespace std;
+
+
+template<class T>
+struct MNode
+{
+	MNode() :Next(nullptr), Previous(nullptr)
+	{
+
+	}
+
+	MNode *Next;
+	MNode *Previous;
+	T Data;
+};
 
 
 void PrintVector(vector<int> &temp)
@@ -31,6 +47,67 @@ void PrintVector(vector<int> &temp)
 
 int main()
 {
+	MNode<string> mnode;
+	mnode.Data = "mn1";
+	mnode.Previous = nullptr;
+
+	mnode.Next = new MNode<string>();
+	mnode.Next->Data = "mn2";
+	mnode.Next->Previous = &mnode;
+
+	mnode.Next->Next = new MNode<string>();
+	mnode.Next->Next->Data = "mn3";
+	mnode.Next->Next->Previous = mnode.Next;
+
+	mnode.Next->Next->Next = new MNode<string>();
+	mnode.Next->Next->Next->Data = "mn4";
+	mnode.Next->Next->Next->Previous = mnode.Next->Next;
+
+	auto PrintNode = [&]()
+	{
+		cout << "-------------" << endl;
+		MNode<string> *mnodeptr = &mnode;
+		while (mnodeptr)
+		{
+			cout << mnodeptr->Data << endl;
+			mnodeptr = mnodeptr->Next;
+		}
+	};
+
+	PrintNode();
+
+	auto RemoveNode = [&](const string &removestring)
+	{
+		MNode<string> *ptr = &mnode;
+		while (ptr)
+		{
+			if (ptr->Data == removestring)
+			{
+				ptr->Previous->Next = ptr->Next;
+				if (ptr->Next)
+				{
+					ptr->Next->Previous = ptr->Previous;
+				}
+				delete ptr;
+				ptr = nullptr;
+			}
+			else
+			{
+				ptr = ptr->Next;
+			}
+		}
+	};
+	RemoveNode("mn4");
+	PrintNode();
+
+
+
+
+	cout << "-------------" << endl;
+
+
+
+
 	vector<int> array1; //动态容器
 	array1.push_back(99);	//算法 从尾巴处添加
 	array1.push_back(10);
@@ -84,10 +161,10 @@ int main()
 	int array9[] = { 6,88,5656,332,11,0 };
 	vector<int> array10(array9, array9 + 6);
 	//倒置 不排序
-	reverse(array10.begin(), array10.end()); 
+	reverse(array10.begin(), array10.end());
 	PrintVector(array10);
 	//从小到大
-	sort(array10.begin(), array10.end()); 
+	sort(array10.begin(), array10.end());
 	PrintVector(array10);
 	//复制
 	vector<int> array11;
@@ -101,8 +178,10 @@ int main()
 
 
 
+
+
 	/*
-		string	
+		string
 	*/
 	string str1 = "hello string";
 	string str2 = "222222222222";
@@ -149,6 +228,9 @@ int main()
 
 
 
+
+
+
 	map<int, string> map1;
 	map<int, string> map2{ {1, "qqqqq"},{5, "fagsgdfg"} };
 
@@ -181,7 +263,7 @@ int main()
 			cout << temp.second << endl;
 		}
 	}
-	for (map<int, string>::iterator iter = map1.begin(); iter != map1.end(); iter++) 
+	for (map<int, string>::iterator iter = map1.begin(); iter != map1.end(); iter++)
 	{
 		if (iter->first == 3)
 		{
