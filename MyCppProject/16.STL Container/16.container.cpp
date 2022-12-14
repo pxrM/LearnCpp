@@ -11,6 +11,8 @@
 	map
 
 	双向链表
+
+	list
 */
 
 #include <iostream>
@@ -18,6 +20,7 @@
 #include <algorithm>
 #include <string>
 #include <map>
+#include <list>
 
 using namespace std;
 
@@ -89,7 +92,7 @@ int main()
 					ptr->Next->Previous = ptr->Previous;
 				}
 				delete ptr;
-				ptr = nullptr;
+				ptr = nullptr; 
 			}
 			else
 			{
@@ -270,6 +273,65 @@ int main()
 			cout << iter->second << endl;
 			break;
 		}
+	}
+
+	cout << "-------------" << endl << endl;
+
+
+
+
+	//初始化
+	list<string> nodelist1;
+	list<string> nodelist2({ "aaa", "fdgdfgd", "fsdfsdg", "初始化" });
+	list<string> nodelist3 = { "aaa", "fdgdfgd", "fsdfsdg", "初始化" };
+	list<string> modelist4 = nodelist2;	//深拷贝
+	list<string> modelist5(nodelist2); //深拷贝
+	string nodestr1[] = { "gdfgf", "gggg", "666666666" };
+	list<string> nodelist6(nodestr1, nodestr1 + 3);
+	//添加
+	nodelist6.push_back("向后添加");
+	nodelist6.push_front("向前添加");
+	nodelist6.emplace_back("向后添加，比push_back少执行一次拷贝构造，效率好一点");
+	nodelist6.emplace_front("前");
+	//赋值
+	nodelist6.assign({ "assign赋值","会清理掉之前的元素","adsgdfgfd" });
+	nodelist6.assign({}); //置为空
+	nodelist6.assign(nodelist2.begin(), nodelist2.end());
+	nodelist6.assign(10, "10个值");
+	//弹出（会移除）
+	nodelist6.pop_back(); //弹出最后一个
+	nodelist6.pop_front(); //弹出第一个
+	//遍历
+	for (list<string>::iterator iter = nodelist6.begin(); iter != nodelist6.end(); iter++)
+	{
+		cout << *iter << endl;
+	}
+	cout << "-------------" << endl;
+	for (auto &tmep : nodelist6)
+	{
+		cout << tmep << endl;
+	}
+	cout << "-------------" << endl;
+	for (auto iter = nodelist6.cbegin(); iter != nodelist6.cend(); iter++)
+	{
+		cout << "cbegin和cend代表const迭代器，不可修改    " << *iter << endl;
+	}
+	cout << "-------------" << endl;
+	for (auto iter = nodelist6.rbegin(); iter != nodelist6.rend(); iter++)
+	{
+		cout << *iter << endl;
+	}
+
+	cout << "-------------" << endl;
+	int testi1[] = { 1,2,3,5,45,66,99 };
+	for (auto iter = begin(testi1); iter != end(testi1); iter++)
+	{
+		cout << "顺序迭代器 从前往后    " << *iter << endl;
+	}
+	cout << "-------------" << endl;
+	for (auto iter = rbegin(testi1); iter != rend(testi1); iter++)
+	{
+		cout << "逆序迭代器 从后往前    " << *iter << endl;
 	}
 
 	return 0;
