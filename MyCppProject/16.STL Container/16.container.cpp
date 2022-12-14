@@ -9,9 +9,19 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
+
+void PrintVector(vector<int> &temp)
+{
+	cout << "-------------" << endl;
+	for (vector<int>::iterator iter = temp.begin(); iter != temp.end(); iter++)
+	{
+		cout << *iter << endl;
+	}
+}
 
 int main()
 {
@@ -63,6 +73,26 @@ int main()
 	array8.resize(100, 12);	//填充100 每个值为12
 	array8.reserve(60);
 	array8.swap(array7); //容器交换
+
+
+	int array9[] = { 6,88,5656,332,11,0 };
+	vector<int> array10(array9, array9 + 6);
+	//倒置 不排序
+	reverse(array10.begin(), array10.end()); 
+	PrintVector(array10);
+	//从小到大
+	sort(array10.begin(), array10.end()); 
+	PrintVector(array10);
+	//复制
+	vector<int> array11;
+	array11.resize(array10.size());
+	copy(array10.begin(), array10.end(), array11.begin());
+	PrintVector(array11);
+	//查找
+	auto elementtemp = find(array11.begin(), array11.end(), 88);
+
+	cout << "-------------" << endl;
+
 
 
 	return 0;
