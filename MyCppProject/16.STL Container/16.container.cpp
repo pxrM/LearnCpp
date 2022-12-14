@@ -7,12 +7,15 @@
 	·map
 
 	string
+
+	map
 */
 
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <map>
 
 using namespace std;
 
@@ -97,6 +100,7 @@ int main()
 	cout << "-------------" << endl << endl;
 
 
+
 	/*
 		string	
 	*/
@@ -141,6 +145,50 @@ int main()
 	string str6 = str3.substr(2, 5); //返回2到5之间的字符
 	str3.compare(ch6);	//比较是否相同
 
+	cout << "-------------" << endl << endl;
+
+
+
+	map<int, string> map1;
+	map<int, string> map2{ {1, "qqqqq"},{5, "fagsgdfg"} };
+
+	map1[3] = "nihao";
+	string element1 = map1.at(3);
+
+	map1.insert(pair<int, string>(1, "插入"));
+	map1.insert(map<int, string>::value_type(2, "插入"));
+	map1.insert(make_pair(3, "插入"));
+	map1.insert({ { 9, "qqqqq" }, { 15, "fagsgdfg" } });
+
+	cout << "长度 = " << map1.size() << endl;
+
+	auto pair1 = map1.equal_range(9); //获取一个pair
+
+	map1.erase(3);	//删除key为3的pair
+
+	auto iter1 = map1.find(9);	//二叉查找
+
+	if (!map1.count(7))
+	{
+		map1.insert(make_pair(7, "没有包含7，开始插入"));
+	}
+
+	//for (const pair<int, string> &temp : map1)
+	for (auto &temp : map1)
+	{
+		if (temp.first == 3)
+		{
+			cout << temp.second << endl;
+		}
+	}
+	for (map<int, string>::iterator iter = map1.begin(); iter != map1.end(); iter++) 
+	{
+		if (iter->first == 3)
+		{
+			cout << iter->second << endl;
+			break;
+		}
+	}
 
 	return 0;
 }
