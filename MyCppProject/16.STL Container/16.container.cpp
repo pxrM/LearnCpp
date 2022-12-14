@@ -5,11 +5,14 @@
 	·list
 	·vector
 	·map
+
+	string
 */
 
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <string>
 
 using namespace std;
 
@@ -91,8 +94,52 @@ int main()
 	//查找
 	auto elementtemp = find(array11.begin(), array11.end(), 88);
 
-	cout << "-------------" << endl;
+	cout << "-------------" << endl << endl;
 
+
+	/*
+		string	
+	*/
+	string str1 = "hello string";
+	string str2 = "222222222222";
+	string str3 = str1 + str2;
+	cout << str3 << endl;
+	for (string::iterator iter = str3.begin(); iter != str3.end(); iter++)
+	{
+		cout << *iter << endl;
+	}
+	cout << "获取容器字符串数量 size = " << str3.size() << endl;
+	cout << "获取大小 length = " << str3.length() << endl;
+	cout << "最大尺寸 max_size = " << str3.max_size() << endl;
+	cout << "预分配大小 capacity = " << str3.capacity() << endl;
+	bool isEpty = str3.empty();	// 是否为空
+	str3.c_str();	//返回字符串原始数据  C风格
+	str3.data(); //获取内存地址  C风格
+	str3.reserve(100);	 //预分配多少空间
+	string str4 = "----";
+	str3.swap(str4);	//交换
+	char ch[] = "111111111";
+	str3.insert(2, ch);	//插入
+	str3.append(str4); //合并
+	char ch2 = 'p';
+	str3.push_back(ch2);	//添加字符
+	str3.erase(5);	//删除字符（可以设置区域,5后面的全部被清掉）
+	str3.clear();   //删除全部字符
+	str3.assign("这里是赋值操作");
+	char ch3[] = "这里是赋值操作";
+	char ch4[] = "替换";
+	char ch5[] = "ssss5555ffffff22";
+	string str5 = str3.replace(0, strlen(ch3), ch4);  //替换
+	str3.copy(ch5, strlen(ch5) - 3);	//拷贝
+	int cpos1 = str3.find('5');	//从前往后找
+	int cpos2 = str3.rfind('f');	//从后往前找
+	char ch6[] = "ff";
+	int cpos3 = str3.find_first_of(ch6);	//第一次出现ff的地方
+	int cpos4 = str3.find_last_of(ch6);	//最后一次出现ff的地方
+	int cpos5 = str3.find_first_not_of(ch6);	//返回第一次不包含ff的地方
+	int cpos6 = str3.find_last_not_of(ch6);		//返回最后一次不包含ff的地方
+	string str6 = str3.substr(2, 5); //返回2到5之间的字符
+	str3.compare(ch6);	//比较是否相同
 
 
 	return 0;
