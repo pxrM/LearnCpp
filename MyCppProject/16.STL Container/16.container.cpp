@@ -92,7 +92,7 @@ int main()
 					ptr->Next->Previous = ptr->Previous;
 				}
 				delete ptr;
-				ptr = nullptr; 
+				ptr = nullptr;
 			}
 			else
 			{
@@ -288,6 +288,7 @@ int main()
 	list<string> modelist5(nodelist2); //深拷贝
 	string nodestr1[] = { "gdfgf", "gggg", "666666666" };
 	list<string> nodelist6(nodestr1, nodestr1 + 3);
+	list<int>nodelist7 = { 1,22,645,121,12,0,12,4545,6666, 7856, 0 };
 	//添加
 	nodelist6.push_back("向后添加");
 	nodelist6.push_front("向前添加");
@@ -301,6 +302,47 @@ int main()
 	//弹出（会移除）
 	nodelist6.pop_back(); //弹出最后一个
 	nodelist6.pop_front(); //弹出第一个
+	//移除	nodelist6.erase();
+	nodelist3.remove("aaa");
+	nodelist7.remove_if([](int i) {return i > 6666; }); //大于6666的全部移除
+	nodelist7.unique(); //移除重复的
+	struct UniqueTest
+	{
+		UniqueTest()
+		{
+			a = 0;
+		}
+		UniqueTest(int i) :a(i)
+		{
+		}
+
+		int a;
+
+		bool operator==(const UniqueTest &v)
+		{
+			return a == v.a;
+		}
+	};
+	list<UniqueTest> nodelist8;
+	nodelist8.push_front(UniqueTest(77));
+	nodelist8.push_front(UniqueTest(77));
+	nodelist8.push_front(UniqueTest(525));
+	nodelist8.push_front(UniqueTest(3636));
+	nodelist8.unique();
+	//大小
+	nodelist6.size();
+	//全部清除
+	nodelist6.clear();
+	//交换
+	nodelist6.swap(nodelist3);
+	//插入
+	nodelist6.insert(nodelist6.begin(), "插入开始位置");
+	nodelist6.insert(nodelist6.begin(), { "插入", "开始","位置" });
+	nodelist6.insert(nodelist6.end(), nodelist3.begin(), nodelist3.end());
+	//排序
+	nodelist7.sort();	//默认升序
+	nodelist7.sort(greater<int>()); //降序
+
 	//遍历
 	for (list<string>::iterator iter = nodelist6.begin(); iter != nodelist6.end(); iter++)
 	{
@@ -321,7 +363,6 @@ int main()
 	{
 		cout << *iter << endl;
 	}
-
 	cout << "-------------" << endl;
 	int testi1[] = { 1,2,3,5,45,66,99 };
 	for (auto iter = begin(testi1); iter != end(testi1); iter++)
@@ -332,6 +373,12 @@ int main()
 	for (auto iter = rbegin(testi1); iter != rend(testi1); iter++)
 	{
 		cout << "逆序迭代器 从后往前    " << *iter << endl;
+	}
+	cout << "-------------" << endl;
+	for (auto iter = nodelist6.begin(); iter != nodelist6.end(); iter++)
+	{
+		cout << *iter << endl;
+		advance(iter, 0);	//步长
 	}
 
 	return 0;
