@@ -15,6 +15,8 @@
 	list
 
 	queue
+
+	stack
 */
 
 #include <iostream>
@@ -24,6 +26,7 @@
 #include <map>
 #include <list>
 #include <queue>
+#include <stack>
 
 using namespace std;
 
@@ -416,6 +419,27 @@ int main()
 	q1.swap(q2);
 	cout << "当前大小：" << q1.size() << endl;
 	std::swap(q1, q2);
+
+
+
+	cout << "-------------" << endl;
+	stack<int> st1({ 1,454,65,4545,1212 });
+	stack<int> st2(st1);
+	stack<int> st3 = st1;
+	vector<int> ve1({ 145,545,312487,6878 });
+	stack<int, vector<int>> st4(ve1);
+	//添加
+	st1.push(56);
+	//大小
+	int stLen = st1.size();
+	//交换
+	st1.swap(st2);
+	while (!st1.empty())
+	{
+		int stv1 = st1.top();	//获取头部
+		cout << stv1 << endl;
+		st1.pop();	//弹出头部 会删除
+	}
 
 
 	
