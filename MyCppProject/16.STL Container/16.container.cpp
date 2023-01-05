@@ -13,6 +13,8 @@
 	双向链表
 
 	list
+
+	queue
 */
 
 #include <iostream>
@@ -21,6 +23,7 @@
 #include <string>
 #include <map>
 #include <list>
+#include <queue>
 
 using namespace std;
 
@@ -305,7 +308,8 @@ int main()
 	//移除	nodelist6.erase();
 	nodelist3.remove("aaa");
 	nodelist7.remove_if([](int i) {return i > 6666; }); //大于6666的全部移除
-	nodelist7.unique(); //移除重复的
+	 //移除重复的
+	nodelist7.unique();
 	struct UniqueTest
 	{
 		UniqueTest()
@@ -381,5 +385,39 @@ int main()
 		advance(iter, 0);	//步长
 	}
 
+
+
+
+	cout << "-------------" << endl;
+	//队列
+	queue<int> q1;
+	queue<int> q2({ 1,2,1245,2124,112,0,666666 });
+	queue<int> q3(q2);
+	q1.push(0);
+	q1.push(21);
+	q1.push(20);
+	q1.push(252);
+	q1.push(7);
+	q1.push(8789);
+	//访问头部元素 不删除
+	int v1 = q1.front();
+	//访问尾部元素 不删除
+	int v2 = q1.back();
+	//遍历
+	cout << "当前大小：" << q1.size() << endl;
+	while (!q1.empty())
+	{
+		int v3 = q1.front();
+		cout << v3 << endl;
+		q1.pop();	//弹出头部 会删除
+	}
+	cout << "当前大小：" << q1.size() << endl;
+	//交换
+	q1.swap(q2);
+	cout << "当前大小：" << q1.size() << endl;
+	std::swap(q1, q2);
+
+
+	
 	return 0;
 }
