@@ -19,6 +19,8 @@
 	stack
 
 	set
+
+	forward_list
 */
 
 #include <iostream>
@@ -30,6 +32,7 @@
 #include <queue>
 #include <stack>
 #include <set>
+#include <forward_list>
 
 using namespace std;
 
@@ -115,7 +118,7 @@ int main()
 
 
 
-	
+
 
 
 
@@ -186,7 +189,7 @@ int main()
 	//查找
 	auto elementtemp = find(array11.begin(), array11.end(), 88);
 
-	
+
 
 
 
@@ -236,7 +239,7 @@ int main()
 	string str6 = str3.substr(2, 5); //返回2到5之间的字符
 	str3.compare(ch6);	//比较是否相同
 
-	
+
 
 
 
@@ -282,7 +285,7 @@ int main()
 		}
 	}
 
-	
+
 
 
 
@@ -392,6 +395,38 @@ int main()
 
 
 
+
+	//单向链表
+	cout << "-------forward_list-------" << endl;
+	forward_list<int> forlist1;
+	forlist1.assign(6, 10);
+	for (auto &temp : forlist1)
+	{
+		cout << temp << endl;
+	}
+	forlist1.remove(10);
+	forlist1.remove_if([](int a) {return a > 1; });
+	//添加
+	forlist1.push_front(100);
+	forlist1.emplace_after(forlist1.begin(), 1000);	//在传入的迭代器后面一个位置添加
+	forlist1.emplace_front(1);	//在前面一个位置添加
+	for (forward_list<int>::const_iterator citer = forlist1.cbegin(); citer != forlist1.cend(); citer++) {
+		cout << *citer << endl;
+	}
+	while (!forlist1.empty())
+	{
+		int value1 = forlist1.front();	//获取最前面的值
+		cout << value1 << endl;
+		forlist1.pop_front();	//弹出最前的值
+	}
+	forlist1.erase_after(forlist1.begin()); //删除
+	forward_list<int> forlist2({ 45,4878,698,96,3699,99999,666 });
+	forlist1.splice_after(forlist1.begin(), forlist2); //把forlist2的数据移动到forlist1的begin位置
+	forlist1.splice_after(forlist1.before_begin(), forlist2); //把forlist2的数据移动到forlist1的beginq前面的位置
+
+
+
+
 	cout << "-------queue------" << endl;
 	//队列
 	queue<int> q1;
@@ -485,6 +520,8 @@ int main()
 		cout << *iter << endl;
 	}
 
-	
+
+
+
 	return 0;
 }
