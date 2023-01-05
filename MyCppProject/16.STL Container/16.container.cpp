@@ -17,6 +17,8 @@
 	queue
 
 	stack
+
+	set
 */
 
 #include <iostream>
@@ -27,6 +29,7 @@
 #include <list>
 #include <queue>
 #include <stack>
+#include <set>
 
 using namespace std;
 
@@ -112,11 +115,11 @@ int main()
 
 
 
-	cout << "-------------" << endl;
+	
 
 
 
-
+	cout << "------vector-------" << endl;
 	vector<int> array1; //动态容器
 	array1.push_back(99);	//算法 从尾巴处添加
 	array1.push_back(10);
@@ -183,12 +186,12 @@ int main()
 	//查找
 	auto elementtemp = find(array11.begin(), array11.end(), 88);
 
-	cout << "-------------" << endl << endl;
+	
 
 
 
 
-
+	cout << "-------string------" << endl << endl;
 	/*
 		string
 	*/
@@ -233,19 +236,17 @@ int main()
 	string str6 = str3.substr(2, 5); //返回2到5之间的字符
 	str3.compare(ch6);	//比较是否相同
 
-	cout << "-------------" << endl << endl;
+	
 
 
 
 
 
-
+	cout << "-------map-------" << endl << endl;
 	map<int, string> map1;
 	map<int, string> map2{ {1, "qqqqq"},{5, "fagsgdfg"} };
-
 	map1[3] = "nihao";
 	string element1 = map1.at(3);
-
 	map1.insert(pair<int, string>(1, "插入"));
 	map1.insert(map<int, string>::value_type(2, "插入"));
 	map1.insert(make_pair(3, "插入"));
@@ -281,11 +282,11 @@ int main()
 		}
 	}
 
-	cout << "-------------" << endl << endl;
+	
 
 
 
-
+	cout << "-------list------" << endl << endl;
 	//初始化
 	list<string> nodelist1;
 	list<string> nodelist2({ "aaa", "fdgdfgd", "fsdfsdg", "初始化" });
@@ -391,7 +392,7 @@ int main()
 
 
 
-	cout << "-------------" << endl;
+	cout << "-------queue------" << endl;
 	//队列
 	queue<int> q1;
 	queue<int> q2({ 1,2,1245,2124,112,0,666666 });
@@ -422,7 +423,8 @@ int main()
 
 
 
-	cout << "-------------" << endl;
+
+	cout << "------stack-------" << endl;
 	stack<int> st1({ 1,454,65,4545,1212 });
 	stack<int> st2(st1);
 	stack<int> st3 = st1;
@@ -441,6 +443,47 @@ int main()
 		st1.pop();	//弹出头部 会删除
 	}
 
+
+
+
+	cout << "-------set-------" << endl;
+	// 1.关联式容器		2.内部元素会自动排序	3.元素唯一
+	set<int> set1({ 1,454,656,666,333,454878 });
+	set<int> set2(set1);
+	set<int> set3(set1.begin(), set1.end());
+	set1.insert(100);
+	set1.emplace(9); //添加
+	set1.emplace_hint(set1.end(), 99);	//添加
+	if (!set1.count(222222))	//是否包含
+	{
+		set1.emplace(222222);
+	}
+	set1.erase(1);	//删除
+	set1.find(666);
+	set1.clear();
+	cout << set1.max_size() << endl;
+	set1.swap(set2);
+	auto setPair1 = set1.equal_range(99); //返回99和它的一下个元素的迭代器
+	auto setPair2 = set1.lower_bound(99); //返回元素99的迭代器
+	auto setPair3 = set1.upper_bound(99);	//返回元素99下一个元素的迭代器
+	auto setv1 = set1.begin();
+	auto setv2 = set1.end();
+	auto setv3 = set1.cbegin();
+	auto setv4 = set1.cend();
+	auto setv5 = set1.rbegin();
+	auto setv6 = set1.rend();
+	auto setv7 = set1.crbegin();
+	auto setv8 = set1.crend();
+	bool bEmy = set1.empty();
+	for (auto &temp : set1)
+	{
+		cout << temp << endl;
+	}
+	cout << "--------------" << endl;
+	for (set<int>::iterator iter = set1.begin(); iter != set1.end(); iter++)
+	{
+		cout << *iter << endl;
+	}
 
 	
 	return 0;
