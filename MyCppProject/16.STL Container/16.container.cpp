@@ -21,6 +21,8 @@
 	set
 
 	forward_list
+
+	priority_queue
 */
 
 #include <iostream>
@@ -33,6 +35,7 @@
 #include <stack>
 #include <set>
 #include <forward_list>
+#include <concurrent_priority_queue.h>
 
 using namespace std;
 
@@ -49,6 +52,23 @@ struct MNode
 	MNode *Previous;
 	T Data;
 };
+
+
+
+struct PriorityQTest
+{
+	PriorityQTest(int i) :price(i) {
+	}
+
+	string name;
+	int price;
+
+	friend bool operator<(const PriorityQTest &a, const PriorityQTest &b)
+	{
+		return a.price < b.price;
+	}
+};
+
 
 
 void PrintVector(vector<int> &temp)
@@ -410,6 +430,7 @@ int main()
 	forlist1.push_front(100);
 	forlist1.emplace_after(forlist1.begin(), 1000);	//在传入的迭代器后面一个位置添加
 	forlist1.emplace_front(1);	//在前面一个位置添加
+	
 	for (forward_list<int>::const_iterator citer = forlist1.cbegin(); citer != forlist1.cend(); citer++) {
 		cout << *citer << endl;
 	}
@@ -419,10 +440,10 @@ int main()
 		cout << value1 << endl;
 		forlist1.pop_front();	//弹出最前的值
 	}
-	forlist1.erase_after(forlist1.begin()); //删除
-	forward_list<int> forlist2({ 45,4878,698,96,3699,99999,666 });
-	forlist1.splice_after(forlist1.begin(), forlist2); //把forlist2的数据移动到forlist1的begin位置
-	forlist1.splice_after(forlist1.before_begin(), forlist2); //把forlist2的数据移动到forlist1的beginq前面的位置
+	//forlist1.erase_after(forlist1.begin()); //删除
+	//forward_list<int> forlist2({ 45,4878,698,96,3699,99999,666 });
+	//forlist1.splice_after(forlist1.begin(), forlist2); //把forlist2的数据移动到forlist1的begin位置
+	//forlist1.splice_after(forlist1.before_begin(), forlist2); //把forlist2的数据移动到forlist1的beginq前面的位置
 
 
 
@@ -455,6 +476,45 @@ int main()
 	q1.swap(q2);
 	cout << "当前大小：" << q1.size() << endl;
 	std::swap(q1, q2);
+
+
+
+
+	//优先级队列（会自动排序）
+	cout << "-------priority_queue------" << endl;
+	priority_queue<int> priority1;
+	priority_queue<int> priority2;
+	//添加
+	priority1.emplace(666);
+	priority1.push(11);
+	priority1.push(56);
+	priority1.push(68767);
+	priority2.push(0);
+	priority2.push(12);
+	priority2.push(7789);
+	//
+	priority1.size();
+	//priority1.swap(priority2);
+	//
+	while (!priority1.empty())
+	{
+		int pv1 = priority1.top();
+		cout << pv1 << endl;
+		priority1.pop();
+	}
+	cout << "--------------" << endl;
+	priority_queue<PriorityQTest> priority3;
+	priority3.push(PriorityQTest(56));
+	priority3.push(PriorityQTest(1));
+	priority3.push(PriorityQTest(22));
+	priority3.push(PriorityQTest(857));
+	priority3.push(PriorityQTest(576));
+	while (!priority3.empty())
+	{
+		PriorityQTest pv2 = priority3.top();
+		cout << pv2.price << endl;
+		priority3.pop();
+	}
 
 
 
