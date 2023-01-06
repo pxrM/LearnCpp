@@ -28,6 +28,8 @@
 		multiset
 
 		multimap
+
+		array
 */
 
 #include <iostream>
@@ -40,7 +42,8 @@
 #include <stack>
 #include <set>
 #include <forward_list>
-#include <concurrent_priority_queue.h>
+//#include <concurrent_priority_queue.h>
+#include <array>
 
 using namespace std;
 
@@ -628,6 +631,17 @@ int main()
 	cout << encrypt2 << endl;
 
 
+
+
+
+	cout << "-------array-------" << endl;
+	array<int, 4> farray1({ 1,6,8,89 }); //声明长度为4的array
+	farray1.fill(100); //修改所有元素的值为100
+	auto farrayhead = farray1.data();	//获取首地址
+	auto farrayV1 = farray1[2];
+	auto farrayV2 = farray1.at(0);
+	auto farrayV3 = farray1.back();
+	auto farrayV4 = farray1.front();
 
 	return 0;
 }
