@@ -23,6 +23,8 @@
 	forward_list
 
 	priority_queue
+
+	hash
 */
 
 #include <iostream>
@@ -580,6 +582,18 @@ int main()
 		cout << *iter << endl;
 	}
 
+
+
+
+
+	cout << "-------hash运算加密-------" << endl;
+	hash<int> hash1;
+	int encryptIndex = 123123;
+	//加密后的哈希值
+	auto encrypt1 = hash1._Do_hash(encryptIndex);
+	auto encrypt2 = hash1(encryptIndex);
+	cout << encrypt1 << endl;
+	cout << encrypt2 << endl;
 
 
 
