@@ -1,32 +1,33 @@
 /*
 	STL（容器、算法、迭代器）
-	容器
-	·deque
-	·list
-	·vector
-	·map
 
-	string
 
-	map
 
-	双向链表
+	容器：
 
-	list
+		string
 
-	queue
+		map
 
-	stack
+		双向链表
 
-	set
+		list
 
-	forward_list
+		queue
 
-	priority_queue
+		stack
 
-	hash
+		set
 
-	multiset
+		forward_list
+
+		priority_queue
+
+		hash
+
+		multiset
+
+		multimap
 */
 
 #include <iostream>
@@ -218,7 +219,7 @@ int main()
 
 
 
-	cout << "-------string------" << endl << endl;
+	cout << "-------string------" << endl;
 	/*
 		string
 	*/
@@ -269,7 +270,7 @@ int main()
 
 
 
-	cout << "-------map-------" << endl << endl;
+	cout << "-------map-------" << endl;
 	map<int, string> map1;
 	map<int, string> map2{ {1, "qqqqq"},{5, "fagsgdfg"} };
 	map1[3] = "nihao";
@@ -308,6 +309,20 @@ int main()
 			break;
 		}
 	}
+
+
+
+
+
+	cout << "-------multimap-------" << endl;
+	// 可以有相同的key
+	multimap<int, string> multimap1;
+	multimap1.insert(make_pair(10, "hello world"));
+	multimap1.insert(make_pair(10, "hello"));
+	multimap1.insert(make_pair(10, "world"));
+	auto multimapV1 = multimap1.find(10);	//会匹配第一个
+	cout << multimapV1->second << endl;
+
 
 
 
@@ -480,6 +495,7 @@ int main()
 	q1.swap(q2);
 	cout << "当前大小：" << q1.size() << endl;
 	std::swap(q1, q2);
+
 
 
 
