@@ -25,6 +25,8 @@
 	priority_queue
 
 	hash
+
+	multiset
 */
 
 #include <iostream>
@@ -580,6 +582,20 @@ int main()
 	for (set<int>::iterator iter = set1.begin(); iter != set1.end(); iter++)
 	{
 		cout << *iter << endl;
+	}
+
+
+
+
+	cout << "-------multiset-------" << endl;
+	//可以有相同的元素
+	multiset<int> multiset1;
+	multiset1.insert(1000);
+	multiset1.insert(1000);
+	multiset1.insert(1000);
+	for (auto &temp : multiset1)
+	{
+		cout << temp << endl;
 	}
 
 
