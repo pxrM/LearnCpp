@@ -31,7 +31,7 @@
 
 		array
 
-
+		unordered_map
 */
 
 #include <iostream>
@@ -46,8 +46,10 @@
 #include <forward_list>
 //#include <concurrent_priority_queue.h>
 #include <array>
+#include <unordered_map>
 
 #include "MIterator.h"
+
 
 using namespace std;
 
@@ -277,7 +279,9 @@ int main()
 
 
 
-	cout << "-------map-------" << endl;
+	cout << "-------key有序map-------" << endl;
+	// key有序	红黑树
+	// 空间占有率比较高 每一个节点都有一个父级和子集
 	map<int, string> map1;
 	map<int, string> map2{ {1, "qqqqq"},{5, "fagsgdfg"} };
 	map1[3] = "nihao";
@@ -286,20 +290,14 @@ int main()
 	map1.insert(map<int, string>::value_type(2, "插入"));
 	map1.insert(make_pair(3, "插入"));
 	map1.insert({ { 9, "qqqqq" }, { 15, "fagsgdfg" } });
-
 	cout << "长度 = " << map1.size() << endl;
-
 	auto pair1 = map1.equal_range(9); //获取一个pair
-
 	map1.erase(3);	//删除key为3的pair
-
 	auto iter1 = map1.find(9);	//二叉查找
-
 	if (!map1.count(7))
 	{
 		map1.insert(make_pair(7, "没有包含7，开始插入"));
 	}
-
 	//for (const pair<int, string> &temp : map1)
 	for (auto &temp : map1)
 	{
@@ -316,6 +314,29 @@ int main()
 			break;
 		}
 	}
+
+
+
+
+	cout << "-------key无序map-------" << endl;
+	// key无序	哈希
+	// 建立哈希表的时候很耗时
+	unordered_map<int, int> unorderedMap1;
+	unorderedMap1.insert(make_pair(1, 2));
+	unorderedMap1.insert(make_pair(21, 22));
+	unorderedMap1.insert(make_pair(10, 558));
+	unorderedMap1.insert(make_pair(2, 586));
+	unorderedMap1.insert(make_pair(6, 6));
+	int elementUM1 = unorderedMap1.at(10);
+	elementUM1 = unorderedMap1[1];
+	int umCount = unorderedMap1.count(6);  //这个key出现了几次
+	auto umHash1 = unorderedMap1.hash_function();
+	int hashtest = 22222;
+	umHash1._Do_hash(hashtest);
+	auto hashBucket = unorderedMap1.bucket(10);	//获得哈希桶位置
+	auto bucketCount = unorderedMap1.bucket_count();	//获取桶的数量
+	unorderedMap1.rehash(hashBucket);	//重新计算哈希表
+	auto buckerAverage = unorderedMap1.load_factor();	//返回每个桶平均的元素数量
 
 
 
