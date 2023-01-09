@@ -32,6 +32,8 @@
 		array
 
 		unordered_map
+
+		unordered_multimap
 */
 
 #include <iostream>
@@ -342,14 +344,30 @@ int main()
 
 
 
-	cout << "-------multimap-------" << endl;
+	cout << "-------key有序multimap-------" << endl;
 	// 可以有相同的key
 	multimap<int, string> multimap1;
 	multimap1.insert(make_pair(10, "hello world"));
 	multimap1.insert(make_pair(10, "hello"));
 	multimap1.insert(make_pair(10, "world"));
+	multimap1.insert(make_pair(9, "999"));
 	auto multimapV1 = multimap1.find(10);	//会匹配第一个
 	cout << multimapV1->second << endl;
+
+
+
+
+
+	cout << "-------key无序unordered_multimap-------" << endl;
+	unordered_multimap<int, int> umm1;
+	umm1.insert(make_pair(10, 6));
+	umm1.insert(make_pair(10, 5));
+	//判断两个key是否相等
+	auto keyeq = umm1.key_eq();
+	bool iseq = keyeq(10, 10);
+	if (umm1.key_eq()(1,10))
+	{
+	}
 
 
 
