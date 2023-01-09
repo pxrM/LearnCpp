@@ -670,7 +670,6 @@ int main()
 
 
 
-
 	cout << "-------multiset-------" << endl;
 	//可以有相同的元素
 	multiset<int> multiset1;
@@ -682,6 +681,19 @@ int main()
 		cout << temp << endl;
 	}
 
+
+
+
+	cout << "-------无序unordered_multiset-------" << endl;
+	unordered_multiset<int> ums1 = { 10,68,89,98,88,77,13896,326 };
+	for (auto &temp : ums1)
+	{
+		cout << temp << endl;
+	}
+	for (unordered_multiset<int>::iterator iter = ums1.begin(); iter != ums1.end(); iter++)
+	{
+		cout << *iter << endl;
+	}
 
 
 
