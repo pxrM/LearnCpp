@@ -30,6 +30,8 @@
 		multimap
 
 		array
+
+
 */
 
 #include <iostream>
@@ -44,6 +46,8 @@
 #include <forward_list>
 //#include <concurrent_priority_queue.h>
 #include <array>
+
+#include "MIterator.h"
 
 using namespace std;
 
@@ -470,6 +474,7 @@ int main()
 
 
 
+
 	cout << "-------queue------" << endl;
 	//╤сап
 	queue<int> q1;
@@ -642,6 +647,48 @@ int main()
 	auto farrayV2 = farray1.at(0);
 	auto farrayV3 = farray1.back();
 	auto farrayV4 = farray1.front();
+
+
+
+
+	cout << "-------TArray-------" << endl;
+	//
+	struct MIterTest
+	{
+		MIterTest(int InA) :ID(InA) {
+
+		}
+
+		bool operator!=(const MIterTest &A)
+		{
+			return A.ID != ID;
+		}
+
+		inline int GetID() { return ID; }
+
+
+	protected:
+		int ID = 0;
+	};
+
+	TArray<MIterTest> MArr1;
+	MIterTest ME1(1);
+	MArr1.Add(ME1);
+	MArr1.Add(MIterTest(10));
+	MArr1.Add(MIterTest(99));
+	MArr1.Add(MIterTest(698));
+	for (TArray<MIterTest>::MIteraotr iter = MArr1.Begin(); iter != MArr1.End(); iter++)
+	{
+		cout << (*iter).GetID() << endl;
+	}
+	MArr1.RemoveAt(1);
+	for (int i = 0; i < MArr1.Num(); i++)
+	{
+		cout << MArr1[i]->GetID() << endl;
+	}
+
+
+
 
 	return 0;
 }
