@@ -34,6 +34,10 @@
 		unordered_map
 
 		unordered_multimap
+
+		unordered_set
+
+		unordered_multiset
 */
 
 #include <iostream>
@@ -49,6 +53,7 @@
 //#include <concurrent_priority_queue.h>
 #include <array>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "MIterator.h"
 
@@ -609,8 +614,9 @@ int main()
 
 
 	cout << "-------set-------" << endl;
+	//红黑树的平衡二叉树
 	// 1.关联式容器		2.内部元素会自动排序	3.元素唯一
-	set<int> set1({ 1,454,656,666,333,454878 });
+	set<int> set1({ 454878,454,656,666,333,1 });
 	set<int> set2(set1);
 	set<int> set3(set1.begin(), set1.end());
 	set1.insert(100);
@@ -646,6 +652,21 @@ int main()
 	{
 		cout << *iter << endl;
 	}
+
+
+
+
+	cout << "-------无序unordered_set-------" << endl;
+	//内部哈希
+	unordered_set<int> us1;
+	us1.insert(1213);
+	us1.insert(99);
+	us1.insert(86869);
+	for (auto &temp : us1)
+	{
+		cout << temp << endl;
+	}
+
 
 
 
