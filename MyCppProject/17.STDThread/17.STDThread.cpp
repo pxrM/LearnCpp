@@ -15,11 +15,13 @@
 
 	锁：防止多个线程访问共享资源出现问题，当加锁时其它线程不能访问，会对线程进行阻塞
 	死锁：当一个线程访问资源时进行加锁，但是这个线程卡住了，然后其它排队访问的线程也都卡住了
+	互斥锁：互斥锁是多个线程一起去抢，抢到锁的线程先执行，没有抢到锁的线程需要等待，等互斥锁使用完释放后，其它等待的线程再去抢这个锁。
 
 */
 #include <iostream>
 #include <thread>
 #include <string>
+#include <mutex>
 
 using namespace std; //跨平台
 
@@ -28,7 +30,7 @@ void Hello1()
 {
 	std::cout << "Hello1 thread" << std::endl;
 
-	std::this_thread::sleep_for(std::chrono::seconds(2));	//当前线程休眠两秒
+	//std::this_thread::sleep_for(std::chrono::seconds(2));	//当前线程休眠两秒
 }
 
 void Hello2()
@@ -40,6 +42,52 @@ void Hello3(int a, string b)
 {
 	std::cout << a << b << std::endl;
 }
+
+
+
+
+std::mutex mtest;
+
+// 互斥锁
+void Hello4()
+{
+	mtest.lock();	//线程加锁  后面线程开始挂起排队
+
+	cout << "Hello4" << endl;
+	this_thread::sleep_for(chrono::seconds(2));
+
+	mtest.unlock();	//解锁		这里如果不解锁就会出现死锁的情况
+}
+
+
+// 设计互斥锁
+struct MyEvent
+{
+	MyEvent()
+	{
+		m.lock();
+	}
+
+	~MyEvent()
+	{
+		m.unlock();
+	}
+	static mutex m;
+};
+
+mutex MyEvent::m;
+#define LOCK MyEvent Event;
+
+void Hello5()
+{
+	LOCK;
+
+	cout << "Hello5" << endl;
+	this_thread::sleep_for(chrono::seconds(2));
+}
+
+
+
 
 class CTest
 {
@@ -57,7 +105,6 @@ int main()
 	std::thread threadTest2(Hello2);
 	threadTest2.swap(threadTest1);
 	threadTest2.join();
-	cout << endl;
 	cout << "线程id=0表示线程非活跃状态 " << threadTest1.joinable() << endl;
 	cout << "thread id = " << threadTest1.get_id() << endl;
 	threadTest1.join();		//join会阻塞主线程 同步操作
@@ -78,12 +125,24 @@ int main()
 
 	CTest ct1;
 	thread threadTest6(&CTest::Run, &ct1, "ct1");
-	threadTest6.detach();
+	//threadTest6.detach();
+
+	//for (int i = 0; i < threadTest6.hardware_concurrency(); i++)
+	//{
+	//	thread threadTest7(Hello4);
+	//	threadTest7.join();
+	//}
+	for (int i = 0; i < threadTest6.hardware_concurrency(); i++)
+	{
+		thread threadTest7(Hello5);
+		threadTest7.join();
+	}
+
 
 
 	cout << "main thread" << endl;
 
-	this_thread::sleep_for(chrono::seconds(2));
+	this_thread::sleep_for(chrono::seconds(2));		//当前线程休眠两秒
 
 	return 0;
 }
