@@ -108,6 +108,12 @@ void Hello7(string str)
 	cout << "Hello7" << str << endl;
 }
 
+mutex mtest2;
+void Hello8()
+{
+	std::lock_guard<mutex> lgm(mtest2);	//ÀàËÆÓÚ MyEvent
+}
+
 
 
 
