@@ -160,6 +160,12 @@ string GetHello1(int a)
 	return "ok";
 }
 
+string GetHello2(future<string> &fu)
+{
+	cout << "GetHello2  " << fu.get() << endl;
+	return "ok";
+}
+
 
 class CTest
 {
@@ -248,14 +254,23 @@ int main()
 
 
 
-	future<string> newfuture = async(launch::async, GetHello1, 8);
-	Sleep(2000);
-	if (newfuture.valid())	//是否可以获取返回值	
-	{
-		string re = newfuture.get();
-		cout << re << endl;
-	}
-	// newfuture.get();  再次调用会奔溃
+	//future<string> newfuture = async(launch::async, GetHello1, 8);
+	//Sleep(2000);
+	//if (newfuture.valid())	//是否可以获取返回值	
+	//{
+	//	string re = newfuture.get();
+	//	cout << re << endl;
+	//}
+	//// newfuture.get();  再次调用会奔溃
+
+
+
+	promise<string> pro;
+	//promise<string> pro1;
+	//pro1 = move(pro);
+	future<string> fu1 = pro.get_future();
+	future<string> fu2 = async(launch::async, GetHello2, std::ref(fu1));
+	pro.set_value("从主线程传入参数给其它线程");
 
 
 
