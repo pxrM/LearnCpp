@@ -22,6 +22,7 @@
 #include <thread>
 #include <string>
 #include <mutex>
+#include <Windows.h> //挂起和唤醒线程需要
 
 using namespace std; //跨平台
 
@@ -92,6 +93,23 @@ void Hello5()
 }
 
 
+void Hello6()
+{
+	while (true)
+	{
+		Sleep(1000);	//休眠一秒 ，window底层api
+
+		cout << "window sleep" << endl;
+	}
+}
+
+void Hello7(string str)
+{
+	cout << "Hello7" << str << endl;
+}
+
+
+
 
 
 
@@ -107,43 +125,52 @@ public:
 
 int main()
 {
-	std::thread threadTest1(Hello1);
-	std::thread threadTest2(Hello2);
-	threadTest2.swap(threadTest1);
-	threadTest2.join();
-	cout << "线程id=0表示线程非活跃状态 " << threadTest1.joinable() << endl;
-	cout << "thread id = " << threadTest1.get_id() << endl;
-	threadTest1.join();		//join会阻塞主线程 同步操作
-	//threadTest1.detach();	//非阻塞
-	cout << "硬件并发的数量 可以开多少个线程 = " << threadTest1.hardware_concurrency() << endl;
-	//auto winHandle = threadTest1.native_handle();	//获取win的句柄进行一些原生操作
-	std::thread threadTest3;
-	cout << "线程id=0表示线程非活跃状态 " << threadTest3.joinable() << endl;
+	//std::thread threadTest1(Hello1);
+	//std::thread threadTest2(Hello2);
+	//threadTest2.swap(threadTest1);
+	//threadTest2.join();
+	//cout << "线程id=0表示线程非活跃状态 " << threadTest1.joinable() << endl;
+	//cout << "thread id = " << threadTest1.get_id() << endl;
+	//threadTest1.join();		//join会阻塞主线程 同步操作
+	////threadTest1.detach();	//非阻塞
+	//cout << "硬件并发的数量 可以开多少个线程 = " << threadTest1.hardware_concurrency() << endl;
+	////auto winHandle = threadTest1.native_handle();	//获取win的句柄进行一些原生操作
+	//std::thread threadTest3;
+	//cout << "线程id=0表示线程非活跃状态 " << threadTest3.joinable() << endl;
 
-	thread threadTest4(Hello3, 6, "can");
-	threadTest4.detach();
-	int test5 = 100;
+	//thread threadTest4(Hello3, 6, "can");
+	//threadTest4.detach();
+	//int test5 = 100;
 
-	thread threadTest5([&](int a, string b) {
-		cout << test5 << a << b << endl;
-		}, 6, "test");
-	threadTest5.detach();
+	//thread threadTest5([&](int a, string b) {
+	//	cout << test5 << a << b << endl;
+	//	}, 6, "test");
+	//threadTest5.detach();
 
-	CTest ct1;
-	thread threadTest6(&CTest::Run, &ct1, "ct1");
-	//threadTest6.detach();
+	//CTest ct1;
+	//thread threadTest6(&CTest::Run, &ct1, "ct1");
+	////threadTest6.detach();
 
+	////for (int i = 0; i < threadTest6.hardware_concurrency(); i++)
+	////{
+	////	thread threadTest7(Hello4);
+	////	threadTest7.join();
+	////}
 	//for (int i = 0; i < threadTest6.hardware_concurrency(); i++)
 	//{
-	//	thread threadTest7(Hello4);
+	//	thread threadTest7(Hello5);
 	//	threadTest7.join();
 	//}
-	for (int i = 0; i < threadTest6.hardware_concurrency(); i++)
-	{
-		thread threadTest7(Hello5);
-		threadTest7.join();
-	}
 
+	//thread threadTest8(Hello6);
+	//SuspendThread(threadTest8.native_handle());	// 挂起线程
+	//this_thread::sleep_for(chrono::seconds(2));		//当前线程休眠两秒
+	//ResumeThread(threadTest8.native_handle());	//唤醒线程
+
+	//使用move可以避免拷贝
+	thread threadTest9(Hello7, move("参数"));
+	thread threadTest10 = move(threadTest9);
+	threadTest10.join();
 
 
 	cout << "main thread" << endl;
