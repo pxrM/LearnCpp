@@ -23,6 +23,7 @@
 #include <string>
 #include <mutex>
 #include <Windows.h> //挂起和唤醒线程需要
+#include <condition_variable> //条件锁
 
 using namespace std; //跨平台
 
@@ -140,7 +141,18 @@ void Hello10()
 		});
 }
 
+mutex mtest3;
+condition_variable cv;
+void Hello11()
+{
+	cout << "Hello11" << endl;
+	Sleep(1000);
+	if (true)
+	{
+		cv.notify_one();	//激活主线程
+	}
 
+}
 
 
 class CTest
@@ -198,16 +210,23 @@ int main()
 	//ResumeThread(threadTest8.native_handle());	//唤醒线程
 
 	//使用move可以避免拷贝
-	thread threadTest9(Hello7, move("参数"));
-	thread threadTest10 = move(threadTest9);
-	threadTest10.join();
+	//thread threadTest9(Hello7, move("参数"));
+	//thread threadTest10 = move(threadTest9);
+	//threadTest10.join();
 
-	thread threadTest11;
-	for (int i = 0; i < threadTest10.hardware_concurrency(); i++)
-	{
-		thread threadTest11(Hello10);
-		threadTest11.join();
-	}
+	//thread threadTest11;
+	//for (int i = 0; i < threadTest10.hardware_concurrency(); i++)
+	//{
+	//	thread threadTest11(Hello10);
+	//	threadTest11.join();
+	//}
+
+	thread threadTest12(Hello11);
+	threadTest12.detach();
+
+	unique_lock<mutex> ulock(mtest3);
+	cv.wait(ulock);	// 锁住主线程
+
 
 
 	cout << "main thread" << endl;
