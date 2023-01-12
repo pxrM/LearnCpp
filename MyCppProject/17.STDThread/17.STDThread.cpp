@@ -125,6 +125,20 @@ void Hello9()
 	cout << "Hello9" << endl;
 }
 
+void Init()
+{
+	cout << "init" << endl;
+	Sleep(2000);
+}
+once_flag o_flag;
+void Hello10()
+{
+	cout << "Hello10" << endl;
+	call_once(o_flag, []()
+		{
+			Init();	// 在多线程调用的情况下只执行一次
+		});
+}
 
 
 
@@ -187,6 +201,13 @@ int main()
 	thread threadTest9(Hello7, move("参数"));
 	thread threadTest10 = move(threadTest9);
 	threadTest10.join();
+
+	thread threadTest11;
+	for (int i = 0; i < threadTest10.hardware_concurrency(); i++)
+	{
+		thread threadTest11(Hello10);
+		threadTest11.join();
+	}
 
 
 	cout << "main thread" << endl;
