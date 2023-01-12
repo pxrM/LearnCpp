@@ -24,6 +24,7 @@
 #include <mutex>
 #include <Windows.h> //挂起和唤醒线程需要
 #include <condition_variable> //条件锁
+#include <future>
 
 using namespace std; //跨平台
 
@@ -151,7 +152,12 @@ void Hello11()
 	{
 		cv.notify_one();	//激活主线程
 	}
+}
 
+string GetHello1(int a)
+{
+	cout << "GetHello1  " << a << endl;
+	return "ok";
 }
 
 
@@ -180,14 +186,18 @@ int main()
 	//std::thread threadTest3;
 	//cout << "线程id=0表示线程非活跃状态 " << threadTest3.joinable() << endl;
 
+
 	//thread threadTest4(Hello3, 6, "can");
 	//threadTest4.detach();
 	//int test5 = 100;
+
 
 	//thread threadTest5([&](int a, string b) {
 	//	cout << test5 << a << b << endl;
 	//	}, 6, "test");
 	//threadTest5.detach();
+
+
 
 	//CTest ct1;
 	//thread threadTest6(&CTest::Run, &ct1, "ct1");
@@ -204,15 +214,21 @@ int main()
 	//	threadTest7.join();
 	//}
 
+
+
 	//thread threadTest8(Hello6);
 	//SuspendThread(threadTest8.native_handle());	// 挂起线程
 	//this_thread::sleep_for(chrono::seconds(2));		//当前线程休眠两秒
 	//ResumeThread(threadTest8.native_handle());	//唤醒线程
 
+
+
 	//使用move可以避免拷贝
 	//thread threadTest9(Hello7, move("参数"));
 	//thread threadTest10 = move(threadTest9);
 	//threadTest10.join();
+
+
 
 	//thread threadTest11;
 	//for (int i = 0; i < threadTest10.hardware_concurrency(); i++)
@@ -221,11 +237,25 @@ int main()
 	//	threadTest11.join();
 	//}
 
-	thread threadTest12(Hello11);
-	threadTest12.detach();
 
-	unique_lock<mutex> ulock(mtest3);
-	cv.wait(ulock);	// 锁住主线程
+
+	//thread threadTest12(Hello11);
+	//threadTest12.detach();
+
+
+	//unique_lock<mutex> ulock(mtest3);
+	//cv.wait(ulock);	// 锁住主线程
+
+
+
+	future<string> newfuture = async(launch::async, GetHello1, 8);
+	Sleep(2000);
+	if (newfuture.valid())	//是否可以获取返回值	
+	{
+		string re = newfuture.get();
+		cout << re << endl;
+	}
+	// newfuture.get();  再次调用会奔溃
 
 
 
