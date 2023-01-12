@@ -80,11 +80,17 @@ mutex MyEvent::m;
 
 void Hello5()
 {
-	LOCK;
+	bool bLock = MyEvent::m.try_lock();	 // 如果当前线程没有被锁那么会返回true 代表当前线程可以被锁
 
-	cout << "Hello5" << endl;
-	this_thread::sleep_for(chrono::seconds(2));
+	if (bLock)
+	{
+		LOCK;
+
+		cout << "Hello5" << endl;
+		this_thread::sleep_for(chrono::seconds(2));
+	}
 }
+
 
 
 
