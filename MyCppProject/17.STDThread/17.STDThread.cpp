@@ -114,6 +114,16 @@ void Hello8()
 	std::lock_guard<mutex> lgm(mtest2);	//类似于 MyEvent
 }
 
+void Hello9()
+{
+	unique_lock<mutex> ugm(mtest2);	//类似于 MyEvent
+	//unique_lock<mutex> gm(mtest2, chrono::seconds(2));
+	//ugm.try_lock_for(chrono::seconds(2));	//锁两秒
+	cout << "这段代码被锁了两秒" << endl;
+	ugm.unlock(); 
+
+	cout << "Hello9" << endl;
+}
 
 
 
