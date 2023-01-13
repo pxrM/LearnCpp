@@ -122,7 +122,7 @@ void Hello9()
 	//unique_lock<mutex> gm(mtest2, chrono::seconds(2));
 	//ugm.try_lock_for(chrono::seconds(2));	//锁两秒
 	cout << "这段代码被锁了两秒" << endl;
-	ugm.unlock(); 
+	ugm.unlock();
 
 	cout << "Hello9" << endl;
 }
@@ -166,6 +166,12 @@ string GetHello2(future<string> &fu)
 	return "ok";
 }
 
+string GetHello3(shared_future<string> fu)
+{
+	cout << "GetHello3  " << fu.get() << endl;
+	return "ok";
+}
+
 
 class CTest
 {
@@ -193,17 +199,20 @@ int main()
 	//cout << "线程id=0表示线程非活跃状态 " << threadTest3.joinable() << endl;
 
 
+		/*------------------------------*/
+
 	//thread threadTest4(Hello3, 6, "can");
 	//threadTest4.detach();
 	//int test5 = 100;
 
+		/*------------------------------*/
 
 	//thread threadTest5([&](int a, string b) {
 	//	cout << test5 << a << b << endl;
 	//	}, 6, "test");
 	//threadTest5.detach();
 
-
+		/*------------------------------*/
 
 	//CTest ct1;
 	//thread threadTest6(&CTest::Run, &ct1, "ct1");
@@ -220,21 +229,21 @@ int main()
 	//	threadTest7.join();
 	//}
 
-
+		/*------------------------------*/
 
 	//thread threadTest8(Hello6);
 	//SuspendThread(threadTest8.native_handle());	// 挂起线程
 	//this_thread::sleep_for(chrono::seconds(2));		//当前线程休眠两秒
 	//ResumeThread(threadTest8.native_handle());	//唤醒线程
 
-
+		/*------------------------------*/
 
 	//使用move可以避免拷贝
 	//thread threadTest9(Hello7, move("参数"));
 	//thread threadTest10 = move(threadTest9);
 	//threadTest10.join();
 
-
+		/*------------------------------*/
 
 	//thread threadTest11;
 	//for (int i = 0; i < threadTest10.hardware_concurrency(); i++)
@@ -243,7 +252,7 @@ int main()
 	//	threadTest11.join();
 	//}
 
-
+		/*------------------------------*/
 
 	//thread threadTest12(Hello11);
 	//threadTest12.detach();
@@ -252,7 +261,7 @@ int main()
 	//unique_lock<mutex> ulock(mtest3);
 	//cv.wait(ulock);	// 锁住主线程
 
-
+		/*------------------------------*/
 
 	//future<string> newfuture = async(launch::async, GetHello1, 8);
 	//Sleep(2000);
@@ -263,14 +272,24 @@ int main()
 	//}
 	//// newfuture.get();  再次调用会奔溃
 
+		/*------------------------------*/
+
+	//promise<string> pro;
+	////promise<string> pro1;
+	////pro1 = move(pro);
+	//future<string> fu1 = pro.get_future();
+	//future<string> fu2 = async(launch::async, GetHello2, std::ref(fu1));
+	//pro.set_value("从主线程传入参数给其它线程");
 
 
-	promise<string> pro;
-	//promise<string> pro1;
-	//pro1 = move(pro);
-	future<string> fu1 = pro.get_future();
-	future<string> fu2 = async(launch::async, GetHello2, std::ref(fu1));
-	pro.set_value("从主线程传入参数给其它线程");
+		/*------------------------------*/
+
+	promise<string> pro2;
+	future<string> fu3 = pro2.get_future();
+	shared_future<string> shardfu = fu3.share();	//共享承诺
+	future<string> fu4 = async(launch::async, GetHello3, shardfu);
+	future<string> fu5 = async(launch::async, GetHello3, shardfu);
+	pro2.set_value("从主线程传入参数给其它线程");
 
 
 
