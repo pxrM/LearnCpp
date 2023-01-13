@@ -172,6 +172,12 @@ string GetHello3(shared_future<string> fu)
 	return "ok";
 }
 
+int GetHello4(int a, int b)
+{
+	return a + b;
+}
+
+
 
 class CTest
 {
@@ -284,12 +290,33 @@ int main()
 
 		/*------------------------------*/
 
-	promise<string> pro2;
-	future<string> fu3 = pro2.get_future();
-	shared_future<string> shardfu = fu3.share();	//共享承诺
-	future<string> fu4 = async(launch::async, GetHello3, shardfu);
-	future<string> fu5 = async(launch::async, GetHello3, shardfu);
-	pro2.set_value("从主线程传入参数给其它线程");
+	//promise<string> pro2;
+	//future<string> fu3 = pro2.get_future();
+	//shared_future<string> shardfu = fu3.share();	//共享承诺
+	//future<string> fu4 = async(launch::async, GetHello3, shardfu);
+	//future<string> fu5 = async(launch::async, GetHello3, shardfu);
+	//pro2.set_value("从主线程传入参数给其它线程");
+
+
+		/*------------------------------*/
+	//异步调用绑定的函数
+	packaged_task<int(int, int)> ptask([](int a, int b)->int {
+		return a + b;
+	});
+	bool bbind = ptask.valid();	//是否绑定了函数
+	ptask(1, 6);
+	auto fu6 = ptask.get_future();
+	cout << fu6.get() << endl;
+
+	packaged_task<int(int, int)> ptask1(GetHello4);
+	ptask1(6, 6);
+	auto fu7 = ptask1.get_future();
+	cout << fu7.get() << endl;
+
+	packaged_task<int(int, int)>ptask2(std::bind(GetHello4, 9, 8));
+	ptask2(1, 1);	//这里是无效的
+	auto fu8 = ptask2.get_future();
+	cout << fu8.get() << endl;
 
 
 
