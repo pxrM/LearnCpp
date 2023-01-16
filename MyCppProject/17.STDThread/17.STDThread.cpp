@@ -182,9 +182,9 @@ HANDLE hMutex = nullptr;
 DWORD WINAPI FuncThread1(LPVOID lpParam)
 {
 	cout << "FuncThread1" << endl;
-	WaitForSingleObject(hMutex, INFINITE);
-	Sleep(1000);
-	ReleaseMutex(hMutex);
+	//WaitForSingleObject(hMutex, INFINITE);
+	//Sleep(1000);
+	//ReleaseMutex(hMutex);
 	return 01;
 }
 
@@ -369,28 +369,33 @@ int main()
 	//		_In_opt_ LPCWSTR lpName		//ËøÃû×Ö
 	//	);
 
-	HANDLE h1 = CreateThread(nullptr, 0, FuncThread1, nullptr, 0, nullptr);
+	//HANDLE h1 = CreateThread(nullptr, 0, FuncThread1, nullptr, 0, nullptr);
+	//Sleep(2000);
+	//if (h1)
+	//{
+	//	CloseHandle(h1);
+	//}
+
+
+	//hMutex = CreateMutex(nullptr, FALSE, L"HelloMutex");
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	WaitForSingleObject(hMutex, INFINITE);
+	//	Sleep(1000);
+
+	//	if (hMutex)
+	//	{
+	//		ReleaseMutex(hMutex);
+	//	}
+	//}
+
+	HANDLE h2 = CreateThread(nullptr, 0, FuncThread1, nullptr, 0, nullptr);
+
+	
+	SuspendThread(h2);
 	Sleep(2000);
-	if (h1)
-	{
-		CloseHandle(h1);
-	}
-
-
-	hMutex = CreateMutex(nullptr, FALSE, L"HelloMutex");
-	for (int i = 0; i < 10; i++)
-	{
-		WaitForSingleObject(hMutex, INFINITE);
-		Sleep(1000);
-
-		if (hMutex)
-		{
-			ReleaseMutex(hMutex);
-		}
-	}
-	
-	
-
+	ResumeThread(h2);
+	Sleep(2000);
 
 	cout << "main thread" << endl;
 
