@@ -191,6 +191,7 @@ public:
 
 int main()
 {
+	cout << "main enter" << endl;
 	//std::thread threadTest1(Hello1);
 	//std::thread threadTest2(Hello2);
 	//threadTest2.swap(threadTest1);
@@ -205,20 +206,20 @@ int main()
 	//cout << "线程id=0表示线程非活跃状态 " << threadTest3.joinable() << endl;
 
 
-		/*------------------------------*/
+	/*------------------------------*/
 
 	//thread threadTest4(Hello3, 6, "can");
 	//threadTest4.detach();
 	//int test5 = 100;
 
-		/*------------------------------*/
+	/*------------------------------*/
 
 	//thread threadTest5([&](int a, string b) {
 	//	cout << test5 << a << b << endl;
 	//	}, 6, "test");
 	//threadTest5.detach();
 
-		/*------------------------------*/
+	/*------------------------------*/
 
 	//CTest ct1;
 	//thread threadTest6(&CTest::Run, &ct1, "ct1");
@@ -235,21 +236,21 @@ int main()
 	//	threadTest7.join();
 	//}
 
-		/*------------------------------*/
+	/*------------------------------*/
 
 	//thread threadTest8(Hello6);
 	//SuspendThread(threadTest8.native_handle());	// 挂起线程
 	//this_thread::sleep_for(chrono::seconds(2));		//当前线程休眠两秒
 	//ResumeThread(threadTest8.native_handle());	//唤醒线程
 
-		/*------------------------------*/
+	/*------------------------------*/
 
 	//使用move可以避免拷贝
 	//thread threadTest9(Hello7, move("参数"));
 	//thread threadTest10 = move(threadTest9);
 	//threadTest10.join();
 
-		/*------------------------------*/
+	/*------------------------------*/
 
 	//thread threadTest11;
 	//for (int i = 0; i < threadTest10.hardware_concurrency(); i++)
@@ -258,7 +259,7 @@ int main()
 	//	threadTest11.join();
 	//}
 
-		/*------------------------------*/
+	/*------------------------------*/
 
 	//thread threadTest12(Hello11);
 	//threadTest12.detach();
@@ -267,7 +268,7 @@ int main()
 	//unique_lock<mutex> ulock(mtest3);
 	//cv.wait(ulock);	// 锁住主线程
 
-		/*------------------------------*/
+	/*------------------------------*/
 
 	//future<string> newfuture = async(launch::async, GetHello1, 8);
 	//Sleep(2000);
@@ -278,7 +279,7 @@ int main()
 	//}
 	//// newfuture.get();  再次调用会奔溃
 
-		/*------------------------------*/
+	/*------------------------------*/
 
 	//promise<string> pro;
 	////promise<string> pro1;
@@ -288,7 +289,7 @@ int main()
 	//pro.set_value("从主线程传入参数给其它线程");
 
 
-		/*------------------------------*/
+	/*------------------------------*/
 
 	//promise<string> pro2;
 	//future<string> fu3 = pro2.get_future();
@@ -298,25 +299,38 @@ int main()
 	//pro2.set_value("从主线程传入参数给其它线程");
 
 
-		/*------------------------------*/
-	//异步调用绑定的函数
-	packaged_task<int(int, int)> ptask([](int a, int b)->int {
-		return a + b;
-	});
-	bool bbind = ptask.valid();	//是否绑定了函数
-	ptask(1, 6);
-	auto fu6 = ptask.get_future();
-	cout << fu6.get() << endl;
+	/*------------------------------*/
+	////异步调用绑定的函数
+	//packaged_task<int(int, int)> ptask([](int a, int b)->int {
+	//	return a + b;
+	//});
+	//bool bbind = ptask.valid();	//是否绑定了函数
+	//ptask(1, 6);
+	//auto fu6 = ptask.get_future();
+	//cout << fu6.get() << endl;
 
-	packaged_task<int(int, int)> ptask1(GetHello4);
-	ptask1(6, 6);
-	auto fu7 = ptask1.get_future();
-	cout << fu7.get() << endl;
+	//packaged_task<int(int, int)> ptask1(GetHello4);
+	//ptask1(6, 6);
+	//auto fu7 = ptask1.get_future();
+	//cout << fu7.get() << endl;
 
-	packaged_task<int(int, int)>ptask2(std::bind(GetHello4, 9, 8));
-	ptask2(1, 1);	//这里是无效的
-	auto fu8 = ptask2.get_future();
-	cout << fu8.get() << endl;
+	//packaged_task<int(int, int)>ptask2(std::bind(GetHello4, 9, 8));
+	//ptask2(1, 1);	//这里是无效的
+	//auto fu8 = ptask2.get_future();
+	//cout << fu8.get() << endl;
+
+
+
+	/*------------------------------*/
+	//时间约束
+	//在现在时间基础上休眠两秒
+	thread threadTest13(Hello1);
+	chrono::steady_clock::time_point timepos = chrono::steady_clock::now() + chrono::milliseconds(2000);
+	this_thread::sleep_until(timepos);
+	threadTest13.join();
+
+	mutex mutex_m;
+	unique_lock<mutex>unipl1(mutex_m);
 
 
 
