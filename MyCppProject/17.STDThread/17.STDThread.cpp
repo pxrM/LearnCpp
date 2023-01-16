@@ -178,11 +178,13 @@ int GetHello4(int a, int b)
 }
 
 
-
+HANDLE hMutex = nullptr;
 DWORD WINAPI FuncThread1(LPVOID lpParam)
 {
 	cout << "FuncThread1" << endl;
+	WaitForSingleObject(hMutex, INFINITE);
 	Sleep(1000);
+	ReleaseMutex(hMutex);
 	return 01;
 }
 
@@ -356,14 +358,38 @@ int main()
 	//		_In_ DWORD dwCreationFlags,		//控制线程创建的一个标志  0=立马启动 CREATE_SUSPENDEN(0x00000004)
 	//		_Out_opt_ LPDWORD lpThreadId		//线程id
 	//	);
+
+		//WINBASEAPI
+	//	_Ret_maybenull_
+	//	HANDLE
+	//	WINAPI
+	//	CreateMutexW(
+	//		_In_opt_ LPSECURITY_ATTRIBUTES lpMutexAttributes,	//和线程安全相关 一般为null
+	//		_In_ BOOL bInitialOwner,	//有没有该锁的控制权
+	//		_In_opt_ LPCWSTR lpName		//锁名字
+	//	);
+
 	HANDLE h1 = CreateThread(nullptr, 0, FuncThread1, nullptr, 0, nullptr);
 	Sleep(2000);
 	if (h1)
 	{
 		CloseHandle(h1);
 	}
-	
 
+
+	hMutex = CreateMutex(nullptr, FALSE, L"HelloMutex");
+	for (int i = 0; i < 10; i++)
+	{
+		WaitForSingleObject(hMutex, INFINITE);
+		Sleep(1000);
+
+		if (hMutex)
+		{
+			ReleaseMutex(hMutex);
+		}
+	}
+	
+	
 
 
 	cout << "main thread" << endl;
