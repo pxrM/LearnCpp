@@ -179,6 +179,15 @@ int GetHello4(int a, int b)
 
 
 
+DWORD WINAPI FuncThread1(LPVOID lpParam)
+{
+	cout << "FuncThread1" << endl;
+	Sleep(1000);
+	return 01;
+}
+
+
+
 class CTest
 {
 public:
@@ -290,7 +299,6 @@ int main()
 
 
 	/*------------------------------*/
-
 	//promise<string> pro2;
 	//future<string> fu3 = pro2.get_future();
 	//shared_future<string> shardfu = fu3.share();	//共享承诺
@@ -331,6 +339,30 @@ int main()
 
 	mutex mutex_m;
 	unique_lock<mutex>unipl1(mutex_m);
+
+
+
+	/*------------------------------*/
+	//windows 多线程
+	//WINBASEAPI
+	//	_Ret_maybenull_
+	//	HANDLE
+	//	WINAPI
+	//	CreateThread(
+	//		_In_opt_ LPSECURITY_ATTRIBUTES lpThreadAttributes,	//和线程安全相关 一般为null
+	//		_In_ SIZE_T dwStackSize,	//线程栈大小  0为默认
+	//		_In_ LPTHREAD_START_ROUTINE lpStartAddress,		//被线程执行的回调函数
+	//		_In_opt_ __drv_aliasesMem LPVOID lpParameter,		//传入线程参数
+	//		_In_ DWORD dwCreationFlags,		//控制线程创建的一个标志  0=立马启动 CREATE_SUSPENDEN(0x00000004)
+	//		_Out_opt_ LPDWORD lpThreadId		//线程id
+	//	);
+	HANDLE h1 = CreateThread(nullptr, 0, FuncThread1, nullptr, 0, nullptr);
+	Sleep(2000);
+	if (h1)
+	{
+		CloseHandle(h1);
+	}
+	
 
 
 
