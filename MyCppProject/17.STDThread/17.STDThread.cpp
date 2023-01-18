@@ -26,6 +26,9 @@
 #include <condition_variable> //条件锁
 #include <future>
 
+#include "Platform.h"
+
+
 using namespace std; //跨平台
 
 
@@ -198,6 +201,56 @@ public:
 		cout << a << endl;
 	}
 };
+
+
+
+class FMyRunnable :public MRunnable
+{
+public:
+	FMyRunnable(const char *InThreadName, const EThreadPriority InPriority, unsigned int InStack) :bStop(false)
+	{
+		MThread = Platform::Create(this, InThreadName, InPriority, InStack);
+	}
+
+	virtual bool Init() override
+	{
+		return true;
+	}
+
+	virtual int Run() override
+	{
+		for (; ;)
+		{
+			while (!bStop)
+			{
+				Sleep(200);
+
+				cout << "FMyRunnable Run" << endl;
+			}
+		}
+		return 0;
+	}
+
+	virtual int Stop() override
+	{
+		return false;
+	}
+
+	virtual bool Exit() override
+	{
+		return false;
+	}
+
+	virtual RunnableThread *GetThread()
+	{
+		return MThread;
+	}
+
+protected:
+	bool bStop = false;
+	RunnableThread *MThread;
+};
+
 
 
 int main()
@@ -389,13 +442,18 @@ int main()
 	//	}
 	//}
 
-	HANDLE h2 = CreateThread(nullptr, 0, FuncThread1, nullptr, 0, nullptr);
-
-	
+	/*HANDLE h2 = CreateThread(nullptr, 0, FuncThread1, nullptr, 0, nullptr);
 	SuspendThread(h2);
 	Sleep(2000);
 	ResumeThread(h2);
-	Sleep(2000);
+	Sleep(2000);*/
+
+
+	/*------------------------------*/
+	char ThreadName[512] = "MThread";
+	FMyRunnable(ThreadName, EThreadPriority::TPri_Normal, 0);
+
+
 
 	cout << "main thread" << endl;
 
