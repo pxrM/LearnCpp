@@ -108,5 +108,18 @@ int main()
 		});
 
 
+
+	//bind
+	//  延迟传参  1, 6
+	auto FuncBind1 = bind(FunctorTest, 1, 6);
+	result = FuncBind1();
+	result = FuncBind1(9, 9);
+
+	// placeholders::_1, placeholders::_2 占位
+	auto FuncBind2 = bind(FunctorTest, placeholders::_1, placeholders::_2);
+	//result = FuncBind2();   //err
+	result = FuncBind2(9, 9);
+
+
 	return 0;
 }
