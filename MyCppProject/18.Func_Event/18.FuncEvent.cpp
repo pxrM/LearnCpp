@@ -8,6 +8,8 @@
 #include <iostream>
 #include <functional>
 
+#include "MProxy.h"
+
 
 using namespace std;
 
@@ -109,7 +111,7 @@ int main()
 
 
 
-	//bind
+	//	bind
 	//  延迟传参  1, 6
 	auto FuncBind1 = bind(FunctorTest, 1, 6);
 	result = FuncBind1();
@@ -119,6 +121,53 @@ int main()
 	auto FuncBind2 = bind(FunctorTest, placeholders::_1, placeholders::_2);
 	//result = FuncBind2();   //err
 	result = FuncBind2(9, 9);
+
+
+
+	cout << " ------------------------- " << endl;
+
+
+	struct FObject
+	{
+		int Init(int a, int b)
+		{
+			cout << "Init" << endl;
+			return a + b;
+		}
+	}FObj;
+	MObjectDelegate<FObject, int, int, int> ObjDelegate(&FObj, &FObject::Init);
+	auto objresutl = ObjDelegate.Execute(10, 10);
+	cout << "objresutl = " << objresutl << endl;
+
+	MFuncDelegate<int, int, int>FunctionDelegate(FunctorTest);
+	objresutl = FunctionDelegate.Execute(20, 60);
+	cout << "objresutl = " << objresutl << endl;
+
+	//单播代理
+	FactoryDelegate<int, int, int> DelegateInstance;
+	DelegateInstance.Bind(FunctorTest);
+	objresutl = DelegateInstance.Execute(7, 9);
+	cout << "objresutl = " << objresutl << endl;
+
+	DelegateInstance.Bind(&FObj, &FObject::Init);
+	objresutl = DelegateInstance.Execute(8, 9);
+	cout << "objresutl = " << objresutl << endl;
+
+	//创建代理
+	auto DIn1 = FactoryDelegate<int, int, int>::Create(&FObj, &FObject::Init);
+	DIn1.Execute(100, 100);
+
+	auto DIn2 = FactoryDelegate<int, int, int>::Create(FunctorTest);
+	DIn2.Execute(100, 1);
+
+	auto DIn3 = FactoryDelegate<int, int, int>::Create([](int a, int b)->int
+		{
+			cout << " DIn3 " << endl;
+			return a + b;
+		});
+	DIn3.Execute(99, 1);
+
+
 
 
 	return 0;
