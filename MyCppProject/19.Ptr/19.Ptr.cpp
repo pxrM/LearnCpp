@@ -3,6 +3,18 @@
 
 using namespace std;
 
+
+//enable_shared_from_this  会在内部保存一个弱指针
+class CTestPtr :public enable_shared_from_this<CTestPtr>
+{
+public:
+	void Init()
+	{
+
+	}
+};
+
+
 int main()
 {
 	// 裸指针
@@ -21,6 +33,10 @@ int main()
 	bool bSingle = siPtr1.unique(); //是不是唯一的
 	//siPtr1.swap(siPtr2);	//交换
 	siPtr1.reset();	//reset = (siPtr1 = nullptr)
+
+	shared_ptr<CTestPtr> ctsptr1(new CTestPtr);
+	CTestPtr *ctptr = ctsptr1.get();	//转裸指针
+	shared_ptr<CTestPtr> ctsptr2 = ctptr->shared_from_this();	//转共享指针
 
 	// 弱指针 std::weak_ptr
 	
