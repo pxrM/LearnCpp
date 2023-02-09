@@ -14,9 +14,14 @@
 using namespace std;
 
 
+DEFINITION_SIMPLE_SINGLE_DELEGATE(HSD, void, int);
+
+DEFINITION_MULTICAST_SINGLE_DELEGATE(HMD, int, int);
+
+
 int FunctorTest(int a, int b)
 {
-	cout << "FunctorTest" << endl;
+	cout << "FunctorTest" << a+b << endl;
 	return a + b;
 }
 
@@ -29,6 +34,13 @@ auto FunctorLambda = [&](int a, int b)->int
 
 
 int(*FunctorPointer)(int, int);
+
+
+int FunctorTest2(int a)
+{
+	cout << "FunctorTest2 " << a << endl;
+	return a;
+}
 
 
 template<class T>
@@ -53,6 +65,12 @@ public:
 	{
 		cout << "FunctorObj" << endl;
 		return a + b;
+	}
+
+	int FunctorObj2(int a)
+	{
+		cout << "FunctorObj2 " << a << endl;
+		return a;
 	}
 };
 
@@ -143,6 +161,8 @@ int main()
 	objresutl = FunctionDelegate.Execute(20, 60);
 	cout << "objresutl = " << objresutl << endl;
 
+
+
 	//单播代理
 	FactoryDelegate<int, int, int> DelegateInstance;
 	DelegateInstance.Bind(FunctorTest);
@@ -152,6 +172,8 @@ int main()
 	DelegateInstance.Bind(&FObj, &FObject::Init);
 	objresutl = DelegateInstance.Execute(8, 9);
 	cout << "objresutl = " << objresutl << endl;
+
+
 
 	//创建代理
 	auto DIn1 = FactoryDelegate<int, int, int>::Create(&FObj, &FObject::Init);
@@ -166,8 +188,47 @@ int main()
 			return a + b;
 		});
 	DIn3.Execute(99, 1);
+	DIn3.ReleaseDelegate();
 
 
+
+
+
+	SIMPLE_SINGLE_DELEGATE(DIn4, void, int);
+	DIn4.Bind([](int a)
+		{
+			cout << "SIMPLE_SINGLE_DELEGATE  " << a << endl;
+		});
+	DIn4.Execute(1);
+	DIn4.ReleaseDelegate();
+
+
+	HSD DIn5;
+	DIn5.Bind([](int a)
+		{
+			cout << "H S D  " << a << endl;
+		});
+	DIn5.Execute(1);
+	DIn5.ReleaseDelegate();
+
+
+
+
+	MulticastDelegate<int, int> MulticastDelegate;
+	MulticastDelegate.AddFunction([](int a)->int
+		{
+			cout << "" << endl;
+			return 0;
+		});
+	MulticastDelegate.AddFunction(FunctorTest2);
+	Test1 T2;
+	MulticastDelegate.AddFunction(&T2, &Test1::FunctorObj2);
+	MulticastDelegate.Broadcast(600);  
+
+	HMD DIn6;
+	DIn6.AddFunction(FunctorTest2);
+	DIn6.AddFunction(&T2, &Test1::FunctorObj2);
+	DIn6.Broadcast(600);
 
 
 	return 0;

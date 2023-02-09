@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 
 
 template<class TReturn, typename ...ParamTypes>
@@ -73,12 +74,12 @@ private:
 
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-template<class TReturn, typename ...ParamTypes>
 /// <summary>
 /// 工厂
 /// </summary>
 /// <typeparam name="TReturn"></typeparam>
 /// <typeparam name="...ParamTypes"></typeparam>
+template<class TReturn, typename ...ParamTypes>
 class FactoryDelegate
 {
 public:
@@ -142,7 +143,7 @@ public:
 		CurrentDelegatePtr = new MFuncDelegate<TReturn, ParamTypes...>(InFunction);
 	}
 
-	TReturn Execute(ParamTypes &&...Params)
+	virtual TReturn Execute(ParamTypes &&...Params)
 	{
 		return CurrentDelegatePtr->Execute(std::forward<ParamTypes>(Params)...);
 	}
@@ -150,6 +151,82 @@ public:
 private:
 	DelegateBase<TReturn, ParamTypes...> *CurrentDelegatePtr;
 };
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/// <summary>
+/// 单播代理
+/// </summary>
+/// <typeparam name="TReturn"></typeparam>
+/// <typeparam name="...ParamTypes"></typeparam>
+template<class TReturn, typename ...ParamTypes>
+class SingleDelegate :public FactoryDelegate<TReturn, ParamTypes...>
+{
+public:
+	SingleDelegate() :FactoryDelegate<TReturn, ParamTypes...>()
+	{
+	}
+
+};
+
+
+#define SIMPLE_SINGLE_DELEGATE(Name, Return, ...) SingleDelegate<Return, __VA_ARGS__> Name;
+
+#define DEFINITION_SIMPLE_SINGLE_DELEGATE(DefinitionName, Return, ...)\
+class DefinitionName : public SingleDelegate<Return, __VA_ARGS__>\
+{};\
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/// <summary>
+/// 多播代理
+/// </summary>
+/// <typeparam name="TReturn"></typeparam>
+/// <typeparam name="...ParamTypes"></typeparam>
+template<class TReturn, typename ...ParamTypes>
+class MulticastDelegate :public std::vector<FactoryDelegate<TReturn, ParamTypes...>>
+{
+	typedef FactoryDelegate<TReturn, ParamTypes...> TDelegate;
+
+public:
+	MulticastDelegate()
+	{
+	}
+
+	template<class TObjectType>
+	void AddFunction(TObjectType *InObject, TReturn(TObjectType:: *InObjFunction)(ParamTypes...))
+	{
+		this->emplace_back(TDelegate());
+		TDelegate &InDelegate = this->back();
+		InDelegate.Bind(InObject, InObjFunction);
+	}
+
+	void AddFunction(TReturn(InFunction)(ParamTypes...))
+	{
+		this->emplace_back(TDelegate());
+		TDelegate &InDelegate = this->back();
+		InDelegate.Bind(InFunction);
+	}
+
+	void Broadcast(ParamTypes &&...Params)
+	{
+		for (auto &Temp : *this)
+		{
+			Temp.Execute(std::forward<ParamTypes>(Params)...);
+		}
+	}
+
+	void ReleaseDelegates()
+	{
+		for (auto &Temp : *this)
+		{
+			Temp.ReleaseDelegate();
+		}
+	}
+};
+
+#define SIMPLE_MULTICAST_DELEGATE(Name, Return, ...) MulticastDelegate<Return, __VA_ARGS__> Name;
+#define DEFINITION_MULTICAST_SINGLE_DELEGATE(DefinitionName, Return, ...) class DefinitionName : public MulticastDelegate<Return, __VA_ARGS__>{};
 
 /*-----------------------------------------------------------------------------------------------------------------------------------------------------*/
 
