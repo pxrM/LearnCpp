@@ -116,6 +116,18 @@ int main()
 	IInterface *ii = ATest1.CreateInterface();
 	ii->DoWork();
 
+	/*
+		std::auto_ptr<CTestPtr> c++11标准中被废弃
+		std::auto_ptr_ref<CTestPtr>
+		std::unique_ptr<CTestPtr>
+	*/
+	auto_ptr<CTestPtr> autop1(new CTestPtr());
+	auto_ptr<CTestPtr> autop2;
+	autop2 = autop1;	//autop1=null 会剥夺autop1的控制权，容易导致内存奔溃
+	CTestPtr *cc1 = autop2.release();
+	autop2.reset(new CTestPtr());	//重新设置一个类
+	CTestPtr *cc2 = autop2.get();
+
 
 	return 0;
 }
