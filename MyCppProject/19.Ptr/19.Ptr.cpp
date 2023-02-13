@@ -79,6 +79,25 @@ shared_ptr<CTestPtr> ATest::Get()
 
 
 
+class TestDelete
+{
+	int count;
+
+public:
+	TestDelete()
+		:count(0)
+	{}
+
+	template<class T>
+	void operator()(T *p)
+	{
+		cout << "operator()" << endl;
+		delete p;
+	}
+};
+
+
+
 int main()
 {
 	// 裸指针
@@ -127,6 +146,13 @@ int main()
 	CTestPtr *cc1 = autop2.release();
 	autop2.reset(new CTestPtr());	//重新设置一个类
 	CTestPtr *cc2 = autop2.get();
+
+	unique_ptr<CTestPtr> autop3(new CTestPtr());	//唯一、没有引用计数、不能拷贝
+	unique_ptr<CTestPtr> autop4 = unique_ptr<CTestPtr>(new CTestPtr());
+	autop4.get_deleter();
+	//自定义删除
+	unique_ptr<CTestPtr, TestDelete> autop5(new CTestPtr());
+	unique_ptr<CTestPtr, TestDelete> autop6(new CTestPtr(), autop5.get_deleter());
 
 
 	return 0;
