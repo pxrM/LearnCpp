@@ -140,6 +140,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="19.Ptr.cpp" />
+    <ClCompile Include="MSharedPtr.cpp" />
+    <ClCompile Include="MWeakPtr.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MSharedPtr.h" />
+    <ClInclude Include="MWeakPtr.h" />
+    <ClInclude Include="PtrType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

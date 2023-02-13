@@ -1,4 +1,5 @@
 #include <iostream>
+#include "MSharedPtr.h"
 
 
 using namespace std;
@@ -20,6 +21,27 @@ public:
 	void Init()
 	{
 		cout << "init" << endl;
+	}
+
+private:
+	int a;
+};
+
+
+class CTestPtr2
+{
+public:
+	CTestPtr2()
+	{
+		a = 100000;
+	}
+	~CTestPtr2()
+	{
+	}
+
+	void Init()
+	{
+		cout << "CTestPtr2 init" << endl;
 	}
 
 private:
@@ -154,6 +176,14 @@ int main()
 	unique_ptr<CTestPtr, TestDelete> autop5(new CTestPtr());
 	unique_ptr<CTestPtr, TestDelete> autop6(new CTestPtr(), autop5.get_deleter());
 
+
+
+	MSharedPtr<CTestPtr2> TestPtr2(new CTestPtr2());
+	MSharedPtr<CTestPtr2> TestPtr3(TestPtr2);
+	MSharedPtr<CTestPtr2> TestPtr4 = TestPtr2;
+	TestPtr4.Release();
+	TestPtr3->Init();
+	TestPtr3.Release();
 
 	return 0;
 }
