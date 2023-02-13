@@ -27,6 +27,58 @@ private:
 };
 
 
+class IInterface
+{
+public:
+	void SetPtr(shared_ptr<CTestPtr> InPtr)
+	{
+		CWeak = InPtr;
+	}
+
+	virtual void DoWork() = 0;
+
+protected:
+	weak_ptr<CTestPtr> CWeak;
+};
+
+class B :public IInterface
+{
+public:
+	virtual void DoWork() override
+	{
+		CWeak.lock()->Init();
+	}
+};
+
+
+class ATest
+{
+public:
+	ATest()
+		:CShared(new CTestPtr)
+	{
+	}
+
+	IInterface *CreateInterface()
+	{
+		IInterface *face = new B();
+		face->SetPtr(CShared);
+		return face;
+	}
+
+	shared_ptr<CTestPtr> Get();
+
+private:
+	shared_ptr<CTestPtr> CShared;
+};
+
+shared_ptr<CTestPtr> ATest::Get()
+{
+	return CShared;
+}
+
+
+
 int main()
 {
 	// ¬„÷∏’Î
@@ -58,6 +110,11 @@ int main()
 		cout << " ß–ß¡À" << endl;
 	}
 
+
+
+	ATest ATest1;
+	IInterface *ii = ATest1.CreateInterface();
+	ii->DoWork();
 
 
 	return 0;
