@@ -1,6 +1,11 @@
 #pragma once
 
 #include "PtrType.h"
+#include "MWeakPtr.h"
+
+
+template<class T>
+class MWeakPtr;
 
 /// <summary>
 /// ÷«ƒ‹÷∏’Î¿‡
@@ -9,6 +14,8 @@
 template<class T>
 class MSharedPtr
 {
+	friend class MWeakPtr<T>;
+
 public:
 	//MSharedPtr<Test> Instance(new Test)
 	MSharedPtr(T *InInstance = nullptr)
@@ -30,6 +37,14 @@ public:
 		Count = InInstance.Count;
 	}
 
+	MSharedPtr(MWeakPtr<T>& InInstance)
+	{
+		this->Count = InInstance.Count;
+		this->Ptr = InInstance.Ptr;
+
+		this->Count->SharedCount++;
+	}
+
 	//MSharedPtr<Test> Instance(new Test)
 	//MSharedPtr<Test> Instance(InInstance)
 	//MSharedPtr<Test> Instance = InInstance
@@ -44,6 +59,19 @@ public:
 		}
 
 		return *this;
+	}
+
+	MSharedPtr<T>& operator=(MWeakPtr<T>& InInstance)
+	{
+		if (this->Ptr != InInstance.Ptr)
+		{
+			Release();
+
+			this->Count = InInstance.Count;
+			this->Ptr = InInstance.Ptr;
+
+			this->Count->SharedCount++;
+		}
 	}
 
 	T *operator*()
@@ -86,4 +114,97 @@ private:
 	MRefCounter *Count;
 
 };
+
+
+
+template<class T>
+class MWeakPtr
+{
+	friend class MSharedPtr<T>;
+
+public:
+	MWeakPtr()
+		:Ptr(nullptr)
+		, Count(nullptr)
+	{}
+
+	MWeakPtr(MWeakPtr<T>& InInstance)
+		:Ptr(InInstance.Ptr)
+		, Count(InInstance.Count)
+	{
+		Count->WeakCount++;
+	}
+
+	MWeakPtr(MSharedPtr<T>& InInstance)
+		:Ptr(InInstance.Ptr)
+		, Count(InInstance.Count)
+	{
+		Count->WeakCount++;
+	}
+
+	MWeakPtr<T>& operator = (MWeakPtr<T>& MT)
+	{
+		if (this != MT)
+		{
+			Release();
+
+			Ptr = MT.Ptr;
+			Count = MT.Count;
+
+			Count->WeakCount++;
+		}
+
+		return *this;
+	}
+
+	MWeakPtr<T>& operator = (MSharedPtr<T>& MS)
+	{
+		Release();
+
+		Ptr = MS.Ptr;
+		Count = MS.Count;
+
+		Count->WeakCount++;
+
+		return *this;
+	}
+
+	MSharedPtr<T> Pin()
+	{
+		 MSharedPtr<T> SP(*this);
+		 return SP;
+	}
+
+	bool IsValid()
+	{
+		if (Count && Count->WeakCount > 0)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	~MWeakPtr()
+	{
+		Release();
+	}
+
+	void Release()
+	{
+		if (Count)
+		{
+			Count->WeakCount--;
+			if (Count->WeakCount < 1 && Count->SharedCount < 1)
+			{
+				delete Count;
+				Count = nullptr;
+			}
+		}
+	}
+
+private:
+	T* Ptr;
+	MRefCounter* Count;
+};
+
 

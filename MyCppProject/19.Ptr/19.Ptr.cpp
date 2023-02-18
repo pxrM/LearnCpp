@@ -185,5 +185,11 @@ int main()
 	TestPtr3->Init();
 	TestPtr3.Release();
 
+
+	MWeakPtr<CTestPtr2>TestPtr5 = TestPtr2;
+	MWeakPtr<CTestPtr2>TestPtr6(TestPtr2);
+	TestPtr6.Pin()->Init();
+	TestPtr6.Release();
+
 	return 0;
 }
