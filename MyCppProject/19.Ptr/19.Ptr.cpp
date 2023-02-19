@@ -220,9 +220,15 @@ int main()
 	//MA->b;	//无法访问需要强转
 	shared_ptr<const CastTestB>MB = dynamic_pointer_cast<CastTestB>(MA);
 	cout << MB->b << endl;
+
 	//MB->b = 10;	//const 无法修改
 	shared_ptr<CastTestB>MB2 = const_pointer_cast<CastTestB>(MB);
 	MB2->b = 10;
+
+	// dynamic_pointer_cast安全一些
+	shared_ptr<CastTestB>MB3 = static_pointer_cast<CastTestB>(MA);
+
+	shared_ptr<CastTestB>MB4 = reinterpret_pointer_cast<CastTestB>(MA);
 
 	return 0;
 }
