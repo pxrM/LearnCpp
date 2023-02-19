@@ -218,9 +218,11 @@ int main()
 	shared_ptr<CastTestA> MA(new CastTestB);
 	cout << MA->a << endl;
 	//MA->b;	//无法访问需要强转
-	shared_ptr<CastTestB>MB = dynamic_pointer_cast<CastTestB>(MA);
+	shared_ptr<const CastTestB>MB = dynamic_pointer_cast<CastTestB>(MA);
 	cout << MB->b << endl;
-
+	//MB->b = 10;	//const 无法修改
+	shared_ptr<CastTestB>MB2 = const_pointer_cast<CastTestB>(MB);
+	MB2->b = 10;
 
 	return 0;
 }
