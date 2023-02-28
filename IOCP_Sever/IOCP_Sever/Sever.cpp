@@ -1,7 +1,5 @@
 #include <list>
 #include <process.h>	//进程
-#include <winnt.h>
-#include <winsock.h>
 #include <WinSock2.h>
 
 #pragma comment(lib, "ws2_32.lib")
@@ -11,7 +9,11 @@ using namespace std;
 //工作线程
 unsigned int __stdcall Run(void* content)
 {
-
+	for (;;)
+	{
+		Sleep(1000);
+	}
+	return 0;
 }
 
 // 完成端口
@@ -21,7 +23,7 @@ int main()
 {
 	// 线程的返回句柄
 	HANDLE hThreadHandle[32];
-	
+
 	// 创建完成端口
 	Cp = CreateIoCompletionPort(
 		INVALID_HANDLE_VALUE, //打开的文件句柄 这里使用无效值
@@ -38,7 +40,7 @@ int main()
 
 	//SYSTEM_INFO 获取系统信息
 	SYSTEM_INFO SystemInfo;
-	GetSystemInfo(SystemInfo);
+	GetSystemInfo(&SystemInfo);
 	DWORD CPUNum = SystemInfo.dwNumberOfProcessors;	//cpu数量
 
 	for (int i = 0; i < CPUNum * 2; ++i)
@@ -90,13 +92,33 @@ int main()
 		return -1;
 	}
 
-	// 开始监听
+	// 开始监听有没有外部访问
 	if (listen(Listen, SOMAXCONN))
 	{
 		closesocket(Listen);
 		WSACleanup();
 		return -1;
 	}
+
+	// iocp的投递
+	SOCKET ClientAccept = INVALID_SOCKET;
+	SOCKADDR_IN	ClientAddr;
+	int ClientAddrLen = sizeof(ClientAddr);
+	for (;;)
+	{
+		// 开始阻塞，等待客户端链接
+		ClientAccept = WSAAccept(
+			Listen,//本机的套接字
+			(SOCKADDR*)&ClientAddr,//客户端地址
+			&ClientAddrLen,
+			NULL,//用户提供条件函数的进程实际地址
+			0);	//0：作为条件函数返回给引用程序的一个数据
+		if (ClientAccept == SOCKET_ERROR)
+		{
+			break;
+		}
+	}
+
 
 	return 0;
 }
