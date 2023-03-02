@@ -1,3 +1,4 @@
+#include <iostream>
 #include <list>
 #include <process.h>	//进程
 #include <WinSock2.h>
@@ -6,18 +7,124 @@
 
 using namespace std;
 
+
+struct IOData
+{
+	OVERLAPPED OverL;	//重叠io
+	CHAR Buffer[1024];
+	BYTE Type;	//类型 读取还是写入
+	DWORD Len; 
+	WSABUF WsaBuf;
+};
+
+class ClientObj
+{
+public:
+	ClientObj(SOCKET s, SOCKADDR_IN sin)
+		:ClientSocket(s)
+		, Sin(sin)
+	{
+	}
+
+	~ClientObj()
+	{
+	}
+
+public:
+	BOOL Recv();
+	BOOL Send();
+
+public:
+	SOCKET ClientSocket;
+	SOCKADDR_IN Sin;
+	IOData Data;
+};
+
+BOOL ClientObj::Recv()
+{
+	return TRUE;
+}
+
+BOOL ClientObj::Send()
+{
+	return TRUE;
+}
+
+//链接进来的客户端
+list<ClientObj*>ClientList;
+
+// 完成端口
+HANDLE Cp = NULL;
+
+void RemoveClientList(ClientObj* InC)
+{
+	for (list<ClientObj*>::iterator iter = ClientList.begin(); iter != ClientList.end(); ++iter)
+	{
+		if (InC == (*iter))
+		{
+			ClientList.erase(iter);
+			break;
+		}
+	}
+}
+
 //工作线程
 unsigned int __stdcall Run(void* content)
 {
 	for (;;)
 	{
 		Sleep(1000);
+		DWORD IOSize = -1;	//完成一次io操作传输的字节数是多少
+
+		LPOVERLAPPED lpOverlapped = NULL;
+		ClientObj* Client = NULL;
+		bool Ret = GetQueuedCompletionStatus(Cp, &IOSize, (PULONG_PTR)&Client, &lpOverlapped, INFINITE);
+
+		if (Client == NULL && lpOverlapped == NULL)
+		{
+			break;
+		}
+
+		if (Ret)
+		{
+			if (IOSize == 0)
+			{
+				RemoveClientList(Client);
+				continue;
+			}
+			// 提取数据
+			IOData* pData = CONTAINING_RECORD(lpOverlapped, IOData, OverL);
+			switch (pData->Type)
+			{
+			case 0:
+
+				break;
+			case 1:
+
+				break;
+			default:
+				break;
+			}
+		}
+		else
+		{
+			DWORD Msg = GetLastError();
+			if (Msg == WAIT_TIMEOUT)
+			{
+				continue;
+			}
+			else if (lpOverlapped != NULL)
+			{
+				RemoveClientList(Client);
+			}
+			else
+			{
+				break;
+			}
+		}
 	}
 	return 0;
 }
-
-// 完成端口
-HANDLE Cp = NULL;
 
 int main()
 {
@@ -114,6 +221,19 @@ int main()
 			NULL,//用户提供条件函数的进程实际地址
 			0);	//0：作为条件函数返回给引用程序的一个数据
 		if (ClientAccept == SOCKET_ERROR)
+		{
+			break;
+		}
+
+		ClientObj* InClient = new ClientObj(ClientAccept, ClientAddr);
+		ClientList.push_back(InClient);
+
+		//绑定完成端口
+		if (CreateIoCompletionPort(
+			(HANDLE)ClientAccept,
+			Cp,
+			(DWORD)InClient,
+			0) == NULL)
 		{
 			break;
 		}
