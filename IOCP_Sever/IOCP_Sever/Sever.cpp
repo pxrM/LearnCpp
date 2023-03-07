@@ -288,9 +288,17 @@ int main()
 		{
 			RemoveClientList(InClient);
 		}
-
 	}
 
+	//销毁线程池
+	for (int i = 0; i < CPUNum * 2; ++i)
+	{
+		// 释放重叠io（Overlapped）
+		PostQueuedCompletionStatus(Cp, 0, NULL, NULL);
+		CloseHandle(hThreadHandle[i]);
+	}
+	//等待线程都释放后结束程序
+	WaitForMultipleObjects(CPUNum * 2, hThreadHandle, TRUE, INFINITE);
 
 	return 0;
 }
