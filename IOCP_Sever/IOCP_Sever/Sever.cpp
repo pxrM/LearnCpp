@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <list>
 #include <process.h>	//进程
@@ -10,6 +11,11 @@ using namespace std;
 
 struct IOData
 {
+	IOData()
+	{
+		ZeroMemory(this, sizeof(IOData));	//初始化自己
+	}
+
 	OVERLAPPED OverL;	//重叠io
 	CHAR Buffer[1024];
 	BYTE Type;	//类型 读取还是写入
@@ -42,11 +48,35 @@ public:
 
 BOOL ClientObj::Recv()
 {
+	DWORD Len = 0;	//接收了多少
+	DWORD Flag = 0;
+	Data.Type = 0;
+	Data.WsaBuf.buf = Data.Buffer;
+	Data.WsaBuf.len = 1024;
+	if (WSARecv(ClientSocket, &Data.WsaBuf, 1, &Len, &Flag, &Data.OverL, NULL) == SOCKET_ERROR)
+	{
+		if (WSAGetLastError() == ERROR_IO_PENDING)	//消息还未发送完毕
+		{
+			return FALSE;
+		}
+	}
 	return TRUE;
 }
 
 BOOL ClientObj::Send()
 {
+	DWORD Len = 0L;
+	DWORD Flag = 0L;
+	Data.Type = 1;
+	Data.WsaBuf.buf = Data.Buffer;
+	Data.WsaBuf.len = strlen(Data.Buffer);
+	if (WSASend(ClientSocket, &Data.WsaBuf, 1, &Len, Flag, (LPOVERLAPPED)&Data.OverL, NULL) == SOCKET_ERROR)
+	{
+		if (WSAGetLastError() == ERROR_IO_PENDING)	//消息还未发送完毕
+		{
+			return FALSE;
+		}
+	}
 	return TRUE;
 }
 
@@ -75,9 +105,9 @@ unsigned int __stdcall Run(void* content)
 	{
 		Sleep(1000);
 		DWORD IOSize = -1;	//完成一次io操作传输的字节数是多少
-
 		LPOVERLAPPED lpOverlapped = NULL;
 		ClientObj* Client = NULL;
+
 		bool Ret = GetQueuedCompletionStatus(Cp, &IOSize, (PULONG_PTR)&Client, &lpOverlapped, INFINITE);
 
 		if (Client == NULL && lpOverlapped == NULL)
@@ -96,12 +126,28 @@ unsigned int __stdcall Run(void* content)
 			IOData* pData = CONTAINING_RECORD(lpOverlapped, IOData, OverL);
 			switch (pData->Type)
 			{
-			case 0:
+			case 0:	//接收到了客户端发送过来的消息
+			{
+				Client->Data.Len = IOSize;
+				Client->Data.Buffer[IOSize] = '\0';
+				printf(Client->Data.Buffer);
 
+				char buffer[1024] = { 0 };
+				sprintf_s(buffer, 1024, "hi I'am Sever %d \n", Client->ClientSocket);
+				strcpy(Client->Data.Buffer, buffer);
+				Client->Send();
 				break;
+			}
 			case 1:
-
+			{
+				printf(Client->Data.Buffer);
+				Client->Data.Len = 0;
+				if (!Client->Recv())
+				{
+					RemoveClientList(Client);
+				}
 				break;
+			}
 			default:
 				break;
 			}
@@ -207,7 +253,7 @@ int main()
 		return -1;
 	}
 
-	// iocp的投递
+	// iocp的投递  查看有没有客户端连接进来
 	SOCKET ClientAccept = INVALID_SOCKET;
 	SOCKADDR_IN	ClientAddr;
 	int ClientAddrLen = sizeof(ClientAddr);
@@ -228,7 +274,7 @@ int main()
 		ClientObj* InClient = new ClientObj(ClientAccept, ClientAddr);
 		ClientList.push_back(InClient);
 
-		//绑定完成端口
+		//把接收的客户端绑定到完成端口
 		if (CreateIoCompletionPort(
 			(HANDLE)ClientAccept,
 			Cp,
@@ -237,6 +283,12 @@ int main()
 		{
 			break;
 		}
+
+		if (!InClient->Recv())
+		{
+			RemoveClientList(InClient);
+		}
+
 	}
 
 

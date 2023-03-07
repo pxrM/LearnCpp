@@ -41,7 +41,7 @@ int main()
 
 		//发报文
 		char buffer[1024] = { 0 };
-		sprintf_s(buffer, 1024, "Hello I'am client %d\n", ClientSocket);
+		sprintf_s(buffer, 1024, "Hello I'am client %d \n", ClientSocket);
 		send(ClientSocket, buffer, strlen(buffer), 0);
 
 		//接收
