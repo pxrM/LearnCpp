@@ -208,6 +208,9 @@ int main()
 		);
 	}
 
+	// WSAStartup，即WSA(Windows Sockets Asynchronous，Windows异步套接字)的启动命令
+	// 为了在应用程序当中调用任何一个Winsock API函数，首先第一件事情就是必须通过WSAStartup函数完成对Winsock服务的初始化，因此需要调用WSAStartup函数
+	// 使用Socket的程序在使用Socket之前必须调用WSAStartup函数
 	WSADATA WsaData;
 	int Ret = WSAStartup(
 		MAKEWORD(2, 1), //指定版本，参数一：低字节 指定主版本，参数二：高字节 指定修订版
@@ -232,7 +235,7 @@ int main()
 		return -1;
 	}
 
-	// 绑定地址
+	// 指定地址
 	SOCKADDR_IN Sin;
 	Sin.sin_family = AF_INET;	//IPV4互联网协议族
 	Sin.sin_addr.S_un.S_addr = htonl(INADDR_ANY);	//0.0.0.0 任意地址 
