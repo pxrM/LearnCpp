@@ -140,12 +140,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="17.STDThread.cpp" />
+    <ClCompile Include="PackEvent.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="RunnableThread.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PackEvent.h" />
     <ClInclude Include="Platform.h" />
-    <ClInclude Include="Runnable.h" />
     <ClInclude Include="RunnableThread.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -2,7 +2,6 @@
 
 */
 
-#include "Runnable.h"
 #include "Platform.h"
 #include <Windows.h>
 
@@ -11,7 +10,19 @@
 class FWin32RunnableThread :public RunnableThread
 {
 public:
+	~FWin32RunnableThread()
+	{
+		if (MH)
+		{
+			CloseHandle(MH);
+		}
+
+	}
+
 	virtual bool Create(MRunnable *InRunnable) override;
+
+	virtual void Suspend() override;
+	virtual void Resume() override;
 
 protected:
 	HANDLE MH;
@@ -41,7 +52,7 @@ bool FWin32RunnableThread::Create(MRunnable *InRunnable)
 			// 0x406D1388固定程序抛出异常的代码
 			// 0为可持续异常
 			// sizeof(Info)/sizeof(DWORD)获取参数个数
-			RaiseException(0x406D1388, 0, sizeof(Info) / sizeof(DWORD), (DWORD *)(&Info));
+			RaiseException(0x406D1388, 0, sizeof(Info) / sizeof(DWORD), (ULONG_PTR*)(&Info));
 #elif __linux
 
 #endif // _WIN32
@@ -55,6 +66,18 @@ bool FWin32RunnableThread::Create(MRunnable *InRunnable)
 	}
 	return false;
 }
+
+void FWin32RunnableThread::Suspend()
+{
+	SuspendThread(MH);
+}
+
+void FWin32RunnableThread::Resume()
+{
+	ResumeThread(MH);
+}
+
+
 
 class FLinuxRunnableThread :public RunnableThread
 {
@@ -74,8 +97,8 @@ bool FLinuxRunnableThread::Create(MRunnable *InRunnable)
 RunnableThread *Platform::Create(
 	MRunnable *InRunnable,
 	const char *InThreadName,
-	const EThreadPriority InPriority = EThreadPriority::TPri_Normal,
-	unsigned int InStack = 0
+	const EThreadPriority InPriority,
+	unsigned int InStack
 )
 {
 	RunnableThread *rnThread = nullptr;

@@ -5,7 +5,6 @@
 */
 
 #pragma once
-#include "Runnable.h"
 
 // ue线程优先级
 enum EThreadPriority
@@ -20,10 +19,26 @@ enum EThreadPriority
 	TPri_Num,					//优先级的数量
 };
 
+class MRunnable
+{
+public:
+	virtual bool Init() { return false; }
+
+	virtual int Run() = 0;
+
+	virtual int Stop() { return 0; }
+
+	virtual bool Exit() { return false; }
+
+	virtual class RunnableThread* GetThread() = 0;
+};
+
+
 class RunnableThread
 {
 public :
 	RunnableThread();
+	virtual ~RunnableThread(){}
 
 	virtual bool Create(MRunnable *InRunnable) = 0;
 
@@ -34,6 +49,9 @@ public :
 	const EThreadPriority GetPriority() const;
 	const char *GetThreadName() const;
 	const unsigned int GetThreadID() const;
+
+	virtual void Suspend() {};
+	virtual void Resume() {};
 
 protected:
 	EThreadPriority Priority;

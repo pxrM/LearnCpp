@@ -221,11 +221,18 @@ public:
 	{
 		for (; ;)
 		{
+			int i = 0;
 			while (!bStop)
 			{
 				Sleep(200);
 
 				cout << "FMyRunnable Run" << endl;
+
+				i++;
+				if (i >= 20 && MThread)
+				{
+					MThread->Suspend();
+				}
 			}
 		}
 		return 0;
