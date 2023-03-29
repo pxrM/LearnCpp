@@ -26,7 +26,7 @@
 #include <condition_variable> //条件锁
 #include <future>
 
-#include "Platform.h"
+#include "ThreadQueen.h"
 
 
 using namespace std; //跨平台
@@ -460,11 +460,16 @@ int main()
 	char ThreadName[512] = "MThread";
 	FMyRunnable(ThreadName, EThreadPriority::TPri_Normal, 0);
 
+	auto Testtt = [](ThreadQueen*)
+	{
+		cout << "Testtt Testtt" << endl;
+	};
+	TQManager.Bind(Testtt);
 
 
 	cout << "main thread" << endl;
 
-	this_thread::sleep_for(chrono::seconds(2));		//当前线程休眠两秒
+	this_thread::sleep_for(chrono::seconds(20));		//当前线程休眠两秒
 
 	return 0;
 }

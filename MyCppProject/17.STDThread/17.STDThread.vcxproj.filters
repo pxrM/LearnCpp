@@ -27,15 +27,21 @@
     <ClCompile Include="PackEvent.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ThreadQueen.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RunnableThread.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Platform.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="PackEvent.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RunnableThread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadQueen.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

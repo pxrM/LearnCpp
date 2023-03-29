@@ -7,7 +7,7 @@
 #pragma once
 
 // ue线程优先级
-enum EThreadPriority
+enum class EThreadPriority
 {
 	TPri_Normal,				//正常
 	TPri_AboveNormal,			//高于正常
@@ -28,6 +28,8 @@ public:
 
 	virtual int Stop() { return 0; }
 
+	virtual int Start() { return 0; }
+
 	virtual bool Exit() { return false; }
 
 	virtual class RunnableThread* GetThread() = 0;
@@ -36,18 +38,18 @@ public:
 
 class RunnableThread
 {
-public :
+public:
 	RunnableThread();
-	virtual ~RunnableThread(){}
+	virtual ~RunnableThread() {}
 
-	virtual bool Create(MRunnable *InRunnable) = 0;
+	virtual bool Create(MRunnable* InRunnable) = 0;
 
 	void SetPriority(EThreadPriority InPriority);
-	void SetThreadName(const char *InThreadName);
+	void SetThreadName(const char* InThreadName);
 	void SetThreadID(unsigned int InId);
 
 	const EThreadPriority GetPriority() const;
-	const char *GetThreadName() const;
+	const char* GetThreadName() const;
 	const unsigned int GetThreadID() const;
 
 	virtual void Suspend() {};

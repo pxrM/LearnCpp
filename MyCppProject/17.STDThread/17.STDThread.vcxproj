@@ -143,11 +143,13 @@
     <ClCompile Include="PackEvent.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="RunnableThread.cpp" />
+    <ClCompile Include="ThreadQueen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PackEvent.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="RunnableThread.h" />
+    <ClInclude Include="ThreadQueen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
