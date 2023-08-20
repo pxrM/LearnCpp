@@ -35,14 +35,23 @@
 
 /*
 ** Possible states of the Garbage Collector
+*	垃圾收集器的可能状态
 */
+/* 传播状态，即正在传播灰色对象。 */
 #define GCSpropagate	0
+/*  */
 #define GCSatomic	1
+/* 扫描所有对象状态，即正在扫描所有对象。 */
 #define GCSswpallgc	2
+/*  */
 #define GCSswpfinobj	3
+/*  */
 #define GCSswptobefnz	4
+/* 扫描结束状态，即扫描过程已经结束，但还没有执行其他 GC 相关的操作。 */
 #define GCSswpend	5
+/* 调用 finalizer 状态，即正在调用 finalizer（垃圾对象的销毁函数） */
 #define GCScallfin	6
+/* 暂停状态，即 GC 处于空闲状态 */
 #define GCSpause	7
 
 

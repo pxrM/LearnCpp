@@ -1028,6 +1028,12 @@ static int panic (lua_State *L) {
 }
 
 
+/// <summary>
+/// 创建并返回一个新的Lua状态（Lua state）。
+/// 在创建Lua状态后，可以使用返回的Lua状态来执行Lua代码、加载和调用函数、操作Lua栈等操作
+/// </summary>
+/// <param name=""></param>
+/// <returns></returns>
 LUALIB_API lua_State *luaL_newstate (void) {
   lua_State *L = lua_newstate(l_alloc, NULL);
   if (L) lua_atpanic(L, &panic);
