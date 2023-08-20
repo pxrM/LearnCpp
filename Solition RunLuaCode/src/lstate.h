@@ -224,7 +224,6 @@ struct lua_State {
 	GCObject* gclist;  /* GC列表 */
 	struct lua_State* twups;  /* list of threads with open upvalues	 带有打开的 upvalues 的线程列表 */
 	struct lua_longjmp* errorJmp;  /* current error recover point	 当前的错误恢复点 */
-	CallInfo base_ci;  /* CallInfo for first level (C calling Lua)	 第一级别的 CallInfo（C 调用 Lua） */
 
 	/* Hook 相关管理 - 服务于debug模块 */
 	volatile lua_Hook hook;  /* 钩子函数 */
