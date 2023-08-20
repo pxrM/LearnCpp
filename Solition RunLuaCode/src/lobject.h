@@ -98,21 +98,24 @@ struct GCObject {
 ** Union of all Lua values
 */
 typedef union Value {
-  GCObject *gc;    /* collectable objects */
-  void *p;         /* light userdata */
-  int b;           /* booleans = bool */
-  lua_CFunction f; /* light C functions */
-  lua_Integer i;   /* integer numbers = long long */
-  lua_Number n;    /* float numbers  = double*/
+  GCObject *gc;    /* collectable objects    指向可回收对象（Garbage Collected Object）的指针。Lua中的垃圾回收器会管理这些对象的内存 */
+  void *p;         /* light userdata         向轻量级用户数据的指针。这通常是从C代码传递给Lua的指针，Lua不会对其进行垃圾回收 */
+  int b;           /* booleans = bool        用于表示布尔值（boolean）的整数。 */
+  lua_CFunction f; /* light C functions      指向轻量级C函数指针。这些函数可以从Lua代码中调用，并且通常用于提供C代码的功能给Lua使用 */
+  lua_Integer i;   /* integer numbers = long long   用于表示整数数值的长长整型（long long）。在Lua中，整数可以是任意长度的整数 */
+  lua_Number n;    /* float numbers  = double       用于表示浮点数数值的双精度浮点型（double）。在Lua中，浮点数使用双精度浮点数表示 */
 } Value;
 
 
 #define TValuefields	Value value_; int tt_  /* 数据value  类型tt */
 
-
+/*
+    lua_TValue结构体用于在Lua解释器内部表示不同类型的值
+    包含一个value_成员用于存储具体的值，以及一个tt_成员用于标识值的类型。
+*/
 typedef struct lua_TValue {
   TValuefields;
-} TValue;
+} TValue; /* TValue：这是lua_TValue结构体的名称。 */
 
 
 
