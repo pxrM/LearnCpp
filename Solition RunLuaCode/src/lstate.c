@@ -156,7 +156,7 @@ void luaE_shrinkCI(lua_State* L) {
 static void stack_init(lua_State* L1, lua_State* L) {
 	int i; CallInfo* ci;
 	/* initialize stack array */
-	// 分配一个大小为 BASIC_STACK_SIZE 的 TValue 数组，并将其赋值给 L1->stack 字段。TValue 是 Lua 中表示值的结构体类型。
+	// 分配一个大小为 BASIC_STACK_SIZE(40) 的 TValue 数组，并将其赋值给 L1->stack 字段。TValue 是 Lua 中表示值的结构体类型。
 	L1->stack = luaM_newvector(L, BASIC_STACK_SIZE, TValue);
 	// 将 BASIC_STACK_SIZE 赋值给 L1->stacksize 字段，表示栈的大小
 	L1->stacksize = BASIC_STACK_SIZE;
@@ -165,7 +165,7 @@ static void stack_init(lua_State* L1, lua_State* L) {
 		setnilvalue(L1->stack + i);  /* erase new stack */
 	// 将 L1->top 设置为 L1->stack，表示栈的顶部。
 	L1->top = L1->stack;
-	// 通过计算 L1->stack + L1->stacksize - EXTRA_STACK，计算出栈的最后一个元素的位置，并将其赋值给 L1->stack_last 字段。
+	// 通过计算 L1->stack + L1->stacksize - EXTRA_STACK，计算出栈的最后一个元素的位置，并将其赋值给 L1->stack_last 字段。栈顶默认到35，空出5个做buf
 	L1->stack_last = L1->stack + L1->stacksize - EXTRA_STACK;
 	/* initialize first ci */
 	// 将 L1->base_ci 赋值给 ci，L1->base_ci 是 lua_State 结构体中的一个字段，表示第一个 CallInfo 结构体。

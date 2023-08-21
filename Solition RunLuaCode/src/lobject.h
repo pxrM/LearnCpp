@@ -75,6 +75,7 @@ typedef struct GCObject GCObject;
 /*
 ** Common Header for all collectable objects (in macro form, to be
 ** included in other objects)
+* 公共头部，用于支持垃圾回收系统。
 */
 #define CommonHeader	GCObject *next; lu_byte tt; lu_byte marked
 
@@ -96,6 +97,9 @@ struct GCObject {
 
 /*
 ** Union of all Lua values
+* 
+*  Lua 中的 Value 联合体。
+*  联合体用于在 Lua 中表示不同类型的值。它可以根据具体的需要，在不同的字段中存储不同类型的数据，但同时只能使用一个字段来存储值。
 */
 typedef union Value {
   GCObject *gc;    /* collectable objects    指向可回收对象（Garbage Collected Object）的指针。Lua中的垃圾回收器会管理这些对象的内存 */
@@ -107,7 +111,7 @@ typedef union Value {
 } Value;
 
 
-#define TValuefields	Value value_; int tt_  /* 数据value  类型tt */
+#define TValuefields	Value value_; int tt_  /* 表示值的类型标记value  表示值的类型标记tt */
 
 /*
     lua_TValue结构体用于在Lua解释器内部表示不同类型的值
@@ -302,15 +306,17 @@ typedef TValue *StkId;  /* index to stack elements */
 /*
 ** Header for string value; string bytes follow the end of this structure
 ** (aligned according to 'UTString'; see next).
+* 在 Lua 内部用于存储和处理字符串数据。
 */
 typedef struct TString {
   CommonHeader;
-  lu_byte extra;  /* reserved words for short strings; "has hash" for longs */
-  lu_byte shrlen;  /* length for short strings */
-  unsigned int hash;
+  lu_byte extra;  /* reserved words for short strings; "has hash" for longs   保留字节，用于短字符串存储时的预留字段；对于长字符串，表示该字符串是否已经计算过哈希值。 */
+  lu_byte shrlen;  /* length for short strings   短字符串的长度，当字符串较短时直接存储在 TString 结构体内部。 */
+  unsigned int hash; /* 字符串的哈希值，用于在哈希表中进行查找。 */
+  // 联合体，根据字符串的长度不同采取不同的存储方式。
   union {
-    size_t lnglen;  /* length for long strings */
-    struct TString *hnext;  /* linked list for hash table */
+    size_t lnglen;  /* length for long strings  长字符串的长度，在字符串存储在堆上时使用。 */
+    struct TString *hnext;  /* linked list for hash table   指向具有相同哈希值的下一个字符串的指针，用于解决哈希冲突问题。 */
   } u;
 } TString;
 

@@ -88,25 +88,28 @@ typedef struct stringtable {
 ** When a function calls another with a continuation, 'extra' keeps
 ** the function index so that, in case of errors, the continuation
 ** function can be called with the correct top.
+* 
+* 表示函数调用的信息，包括函数索引、栈顶位置、动态调用链等。
 */
 typedef struct CallInfo {
-	StkId func;  /* function index in the stack */
-	StkId	top;  /* top for this function */
-	struct CallInfo* previous, * next;  /* dynamic call link */
+	StkId func;  /* function index in the stack  函数在栈中的索引。 */
+	StkId	top;  /* top for this function  该函数的栈顶位置。 */
+	struct CallInfo* previous, * next;  /* dynamic call link  用于构建动态调用链的指针，指向上一个和下一个 CallInfo 结构体。 */
+	// 一个联合体，用于区分 Lua 函数和 C 函数的不同信息。
 	union {
-		struct {  /* only for Lua functions */
-			StkId base;  /* base for this function */
-			const Instruction* savedpc;
+		struct {  /* only for Lua functions	   如果是 Lua 函数，包含 l 结构体： */
+			StkId base;  /* base for this function	 函数的基地址，在栈中表示该函数的第一个参数。 */
+			const Instruction* savedpc;	/*  保存的程序计数器，用于记录函数执行的进度。 */
 		} l;
-		struct {  /* only for C functions */
-			lua_KFunction k;  /* continuation in case of yields */
-			ptrdiff_t old_errfunc;
-			lua_KContext ctx;  /* context info. in case of yields */
+		struct {  /* only for C functions  如果是 C 函数，包含 c 结构体： */
+			lua_KFunction k;  /* continuation in case of yields		继续执行的回调函数，用于处理协程的恢复操作。 */
+			ptrdiff_t old_errfunc;	/*  旧的错误处理函数。 */
+			lua_KContext ctx;  /* context info. in case of yields	上下文信息，在协程的恢复操作中使用。 */ 
 		} c;
 	} u;
-	ptrdiff_t extra;
-	short nresults;  /* expected number of results from this function */
-	unsigned short callstatus;
+	ptrdiff_t extra;	/* 额外的字段，用于存储其他信息。 */
+	short nresults;  /* expected number of results from this function  期望从该函数返回的结果数量。 */
+	unsigned short callstatus;	/* 调用状态的标志位。 */
 } CallInfo;
 
 
@@ -168,8 +171,8 @@ typedef struct global_State {
 	lu_mem GCestimate;  /* an estimate of the non-garbage memory in use  表示当前正在使用的非垃圾内存的估计值。
 	GCestimate 是根据遍历阶段的结果计算得出的，它代表了 GC 认为当前没有被回收的内存量。
 	这个估计值可能不太准确，但通常用于监视和诊断内存使用情况。 */
-	
-	TValue l_registry;
+
+	TValue l_registry;  /* 全局注册表 table 存储一些全局属性、函数、模块等，以及跨多个 Lua 状态之间共享的数据 */
 	unsigned int seed;  /* randomized seed for hashes	随机化哈希种子。用作随机数发生器的种子。 */
 	lu_byte currentwhite;  /* 表示当前的 GC 白色标记。GC 分为几个阶段，其中白色标记表示需要进行垃圾收集的对象。*/
 	lu_byte gcstate;  /* state of garbage collector	 垃圾收集器状态 */
@@ -185,7 +188,7 @@ typedef struct global_State {
 	GCObject* allweak;  /* list of all-weak tables   所有弱表的列表 */
 	GCObject* tobefnz;  /* list of userdata to be GC   要GC的用户数据列表 */
 	GCObject* fixedgc;  /* list of objects not to be collected  不被收集的对象列表 */
-	
+
 
 	/* GC管理 */
 	unsigned int gcfinnum;  /* number of finalizers to call in each GC step */
