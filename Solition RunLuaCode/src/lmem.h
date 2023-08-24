@@ -42,13 +42,18 @@
 #define luaM_free(L, b)		luaM_realloc_(L, (b), sizeof(*(b)), 0)
 #define luaM_freearray(L, b, n)   luaM_realloc_(L, (b), (n)*sizeof(*(b)), 0)
 
+//直接分配一块固定大小的内存
 #define luaM_malloc(L,s)	luaM_realloc_(L, NULL, 0, (s))
+//分配一个固定类型大小的内存
 #define luaM_new(L,t)		cast(t *, luaM_malloc(L, sizeof(t)))
+//分配多个固定类型的内容块，例如Table 的array
 #define luaM_newvector(L,n,t) \
 		cast(t *, luaM_reallocv(L, NULL, 0, n, sizeof(t)))
 
+//分配一个固定类型的对象
 #define luaM_newobject(L,tag,s)	luaM_realloc_(L, NULL, tag, (s))
 
+//内存扩容
 #define luaM_growvector(L,v,nelems,size,t,limit,e) \
           if ((nelems)+1 > (size)) \
             ((v)=cast(t *, luaM_growaux_(L,v,&(size),sizeof(t),limit,e)))

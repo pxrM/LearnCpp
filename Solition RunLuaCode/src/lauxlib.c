@@ -1035,7 +1035,7 @@ static int panic (lua_State *L) {
 /// <param name=""></param>
 /// <returns></returns>
 LUALIB_API lua_State *luaL_newstate (void) {
-  lua_State *L = lua_newstate(l_alloc, NULL);
+  lua_State *L = lua_newstate(l_alloc, NULL); //将l_alloc函数对象赋值到g->frealloc
   if (L) lua_atpanic(L, &panic);
   return L;
 }

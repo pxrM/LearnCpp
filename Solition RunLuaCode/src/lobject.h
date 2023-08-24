@@ -111,7 +111,7 @@ typedef union Value {
 } Value;
 
 
-#define TValuefields	Value value_; int tt_  /* 表示值的类型标记value  表示值的类型标记tt */
+#define TValuefields	Value value_; int tt_  /*  存储的内容    value  表示值的类型标记tt */
 
 /*
     lua_TValue结构体用于在Lua解释器内部表示不同类型的值
@@ -503,16 +503,26 @@ typedef struct Node {
 } Node;
 
 
+/// <summary>
+/// Table数据结构，分两种存储类型：数组节点和hash节点。
+///     数组节点：sizearray为数组长度，一般存储key值在长度范围内的结果集；
+///     hash节点：k=>v结构，能够存储各类复杂对象结构。
+/// 
+/// LUA语言用法：
+///     数组节点：fruits = { "banana","orange","apple" }
+///     hash节点：a = { x = 12,mutou = 99,[3] = "hello" }
+///     table中带table结构：local a = { {x = 1,y = 2},{x = 3,y = 10} }
+/// </summary>
 typedef struct Table {
   CommonHeader;
   lu_byte flags;  /* 1<<p means tagmethod(p) is not present */
   lu_byte lsizenode;  /* log2 of size of 'node' array */
   unsigned int sizearray;  /* size of 'array' array */
-  TValue *array;  /* array part */
-  Node *node;
-  Node *lastfree;  /* any free position is before this position */
-  struct Table *metatable;
-  GCObject *gclist;
+  TValue *array;  /* array part  指向 TValue 类型的指针，用于存储表的数组部分的值。 */
+  Node *node;   /* 指向 Node 类型的指针，用于存储表的哈希部分的键值对。 */
+  Node *lastfree;  /* any free position is before this position  指向 Node 类型的指针，表示最后一个空闲位置之前的任何空闲位置。 */
+  struct Table *metatable;  /* 指向 Table 类型的指针，表示元表对象。 */
+  GCObject *gclist; /* 指向 GCObject 类型的指针，表示垃圾回收链表的下一个对象。 */
 } Table;
 
 
