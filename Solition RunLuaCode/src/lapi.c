@@ -634,6 +634,13 @@ LUA_API int lua_gettable(lua_State* L, int idx) {
 }
 
 
+/// <summary>
+/// 从T[k]上取到一个值，并将值放置到L->top栈顶上，并调整栈顶（L->top++）
+/// </summary>
+/// <param name="L"></param>
+/// <param name="idx"></param>
+/// <param name="k"></param>
+/// <returns></returns>
 LUA_API int lua_getfield(lua_State* L, int idx, const char* k) {
 	lua_lock(L);
 	return auxgetstr(L, index2addr(L, idx), k);
@@ -796,6 +803,13 @@ LUA_API void lua_settable(lua_State* L, int idx) {
 }
 
 
+/// <summary>
+/// 将栈顶的值L->top，赋值到T[k]上，pop弹出栈顶值(L->top--)
+/// </summary>
+/// <param name="L"></param>
+/// <param name="idx"></param>
+/// <param name="k"></param>
+/// <returns></returns>
 LUA_API void lua_setfield(lua_State* L, int idx, const char* k) {
 	lua_lock(L);  /* unlock done in 'auxsetstr' */
 	auxsetstr(L, index2addr(L, idx), k);
