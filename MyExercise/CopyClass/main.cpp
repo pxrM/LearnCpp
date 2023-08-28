@@ -1,3 +1,7 @@
+/*
+	«≥øΩ±¥”Î…ÓøΩ±¥
+*/
+
 #include "QObj.h"
 #include "SObj.h"
 
