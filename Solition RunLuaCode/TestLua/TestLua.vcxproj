@@ -140,6 +140,7 @@
     <None Include="..\src\Makefile" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="LuaTools.h" />
     <ClInclude Include="Student.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

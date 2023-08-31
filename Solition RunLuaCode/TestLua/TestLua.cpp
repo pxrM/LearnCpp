@@ -6,12 +6,14 @@
 #include <iostream>
 #include <string>
 #include "Student.h"
+#include "LuaTools.h"
 
 extern "C"
 {
 #include "lua.h"
 #include "lauxlib.h"
 #include "lualib.h"
+
 }
 
 using namespace std;
@@ -88,7 +90,7 @@ void Test_CCode_For_Lua()
 	cout << "lua file new table name: " << lua_tostring(lua, -1) << endl;
 	lua_getglobal(lua, "ShowTable");
 	lua_call(lua, 0, 0);
-
+	DumpLuaStack(lua);
 	lua_close(lua);
 	cout << "--------------- test c code for lua -------------" << endl;
 }
@@ -286,10 +288,19 @@ void Test_CPP_Code()
 	luaopen_base(lua);
 	luaRegisterCppStudentLibs(lua);
 	luaL_dofile(lua, "../student.lua");
+	/*auto testDump = VSDumpLuaCallStack(lua);
+	for (auto temp : testDump)
+	{
+		cout << temp << endl;
+	}*/
 	lua_close(lua);
-
+	
 	cout << "---------------- test cpp code for lua--------------------" << endl;
 }
+
+
+
+
 
 int main()
 {
