@@ -270,6 +270,9 @@ LUA_API void  (lua_setuservalue) (lua_State *L, int idx);
 */
 LUA_API void  (lua_callk) (lua_State *L, int nargs, int nresults,
                            lua_KContext ctx, lua_KFunction k);
+/*
+* 进行调用，告知虚拟机，函数有n个参数，r个返回值
+*/
 #define lua_call(L,n,r)		lua_callk(L, (n), (r), 0, NULL)
 
 LUA_API int   (lua_pcallk) (lua_State *L, int nargs, int nresults, int errfunc,

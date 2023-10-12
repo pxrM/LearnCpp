@@ -52,12 +52,15 @@ LUAI_FUNC size_t luaZ_read (ZIO* z, void *b, size_t n);	/* read next n bytes */
 
 /* --------- Private Part ------------------ */
 
+/// <summary>
+/// 存储文件流读取的状态信息
+/// </summary>
 struct Zio {
-  size_t n;			/* bytes still unread */
-  const char *p;		/* current position in buffer */
-  lua_Reader reader;		/* reader function */
-  void *data;			/* additional data */
-  lua_State *L;			/* Lua state (for reader) */
+  size_t n;			/* 多少未读取 bytes still unread */
+  const char *p;		/* buffer的读取指针地址 current position in buffer */
+  lua_Reader reader;		/* 文件读取方法 reader function */
+  void *data;			/* buf的指针地址 additional data */
+  lua_State *L;			/* 当前线程栈地址 Lua state (for reader) */
 };
 
 

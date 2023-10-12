@@ -15,22 +15,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TestLua.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Student.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="QObj.h">
+      <Filter>头文件</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\src\Makefile" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Student.h">
+    <ClCompile Include="SObj.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="LuaTools.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+    </ClCompile>
   </ItemGroup>
 </Project>

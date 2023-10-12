@@ -57,6 +57,12 @@ const char lua_ident[] =
 	api_check(l, isstackindex(i, o), "index not in the stack")
 
 
+/// <summary>
+/// 寻找到操作栈CallInfo上的栈指针地址，然后获取数据
+/// </summary>
+/// <param name="L"></param>
+/// <param name="idx">大于0，则从操作栈底部开始寻找值，小于0，则从操作栈栈顶开始寻找值</param>
+/// <returns></returns>
 static TValue* index2addr(lua_State* L, int idx) {
 	CallInfo* ci = L->ci;
 	if (idx > 0) {
@@ -628,6 +634,13 @@ LUA_API int lua_gettable(lua_State* L, int idx) {
 }
 
 
+/// <summary>
+/// 从T[k]上取到一个值，并将值放置到L->top栈顶上，并调整栈顶（L->top++）
+/// </summary>
+/// <param name="L"></param>
+/// <param name="idx"></param>
+/// <param name="k"></param>
+/// <returns></returns>
 LUA_API int lua_getfield(lua_State* L, int idx, const char* k) {
 	lua_lock(L);
 	return auxgetstr(L, index2addr(L, idx), k);
@@ -690,6 +703,13 @@ LUA_API int lua_rawgetp(lua_State* L, int idx, const void* p) {
 }
 
 
+/// <summary>
+/// 创建一个table，固定长度，并将之放在栈顶
+/// </summary>
+/// <param name="L"></param>
+/// <param name="narray">该table的数组部分长度</param>
+/// <param name="nrec">该table的hash部分的长度</param>
+/// <returns></returns>
 LUA_API void lua_createtable(lua_State* L, int narray, int nrec) {
 	Table* t;
 	lua_lock(L);
@@ -783,6 +803,13 @@ LUA_API void lua_settable(lua_State* L, int idx) {
 }
 
 
+/// <summary>
+/// 将栈顶的值L->top，赋值到T[k]上，pop弹出栈顶值(L->top--)
+/// </summary>
+/// <param name="L"></param>
+/// <param name="idx"></param>
+/// <param name="k"></param>
+/// <returns></returns>
 LUA_API void lua_setfield(lua_State* L, int idx, const char* k) {
 	lua_lock(L);  /* unlock done in 'auxsetstr' */
 	auxsetstr(L, index2addr(L, idx), k);
