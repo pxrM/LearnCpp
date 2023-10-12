@@ -94,7 +94,7 @@ typedef struct stringtable {
 typedef struct CallInfo {
 	StkId func;  /* function index in the stack  函数在栈中的索引。 */
 	StkId	top;  /* top for this function  该函数的栈顶位置。 */
-	struct CallInfo* previous, * next;  /* dynamic call link  用于构建动态调用链的指针，指向上一个和下一个 CallInfo 结构体。 */
+	struct CallInfo* previous, * next;  /* dynamic call link  previous和next是双向链表指针，用于连接各个调用栈。当执行完一个函数，通过previous回滚到上一个调用栈CI */
 	// 一个联合体，用于区分 Lua 函数和 C 函数的不同信息。
 	union {
 		struct {  /* only for Lua functions	   如果是 Lua 函数，包含 l 结构体： */
@@ -218,7 +218,7 @@ struct lua_State {
 	CallInfo* ci;  /* call info for current function	 当前运行函数信息 */
 
 	/* 数据栈：栈指针地址管理 StkId = TValue 的数组 */
-	StkId top;  /* first free slot in the stack		线程栈的第一个空闲位置指针 */
+	StkId top;  /* first free slot in the stack		（栈顶位置）线程栈的第一个空闲位置指针 */
 	StkId stack_last;  /* last free slot in the stack	线程栈的最后一个空闲位置 */
 	StkId stack;  /* stack base	 栈的指针，当前执行的位置 */
 

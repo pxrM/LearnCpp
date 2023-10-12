@@ -298,7 +298,7 @@ typedef struct lua_TValue {
 */
 
 
-typedef TValue *StkId;  /* index to stack elements */
+typedef TValue *StkId;  /* index to stack elements  用于表示栈上的值的位置。 */
 
 
 
