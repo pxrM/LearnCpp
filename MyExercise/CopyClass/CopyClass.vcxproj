@@ -127,9 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LRUCache.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="QObj.h" />
     <ClCompile Include="SObj.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LRUCache.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

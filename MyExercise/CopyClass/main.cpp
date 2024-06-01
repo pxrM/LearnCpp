@@ -4,6 +4,7 @@
 
 #include "QObj.h"
 #include "SObj.h"
+#include "LRUCache.h"
 
 /// <summary>
 /// 浅拷贝测试
@@ -40,6 +41,12 @@ int main()
 		要解决这个问题，需要显示重载=运算符了。
 	*/
 	SObj obj5 = obj4;
+
+	LRUCache<int, int, 2> LruCache;
+	LruCache.put(1, 10);
+	LruCache.put(2, 20);
+	LruCache.put(3, 30);
+	std::cout << "是: " << LruCache.get(1) << std::endl;
 
 	system("pause");
 
