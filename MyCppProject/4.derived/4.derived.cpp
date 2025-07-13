@@ -101,7 +101,7 @@ public:
 
 };
 
-bool IsSimulate(Physics *p)
+bool IsSimulate(Physics* p)
 {
 	if (p)
 	{
@@ -209,9 +209,9 @@ void main()
 	character.Start();
 	character.Simulate();
 	character.End();
-	Actor *actorPtr = &character;
-	Physics *physicsPtr = &character;
-	Attach *attachPtr = &character;
+	Actor* actorPtr = &character;
+	Physics* physicsPtr = &character;
+	Attach* attachPtr = &character;
 	IsSimulate(&character);
 
 	CharacteTwo chTwo;

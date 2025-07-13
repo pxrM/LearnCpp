@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32802.440
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35913.81 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.helloCpp", "1.helloCpp\1.helloCpp.vcxproj", "{3021E01D-7067-4F30-969C-707BB335C419}"
 EndProject
@@ -46,6 +46,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "18.Func_Event", "18.Func_Event\18.Func_Event.vcxproj", "{E14D7722-95D0-439E-98D6-D862A3251593}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "19.Ptr", "19.Ptr\19.Ptr.vcxproj", "{A94F2D8B-180C-4CB2-B51E-F147BE552E64}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "20.vector-pushback_emplaback", "20.vector-pushback_emplaback\20.vector-pushback_emplaback.vcxproj", "{660D58C0-84AC-4BF7-9377-5335A40CD494}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "21.enum_enumclass", "21.enum_enumclass\21.enum_enumclass.vcxproj", "{334BD374-EB5C-4946-9977-3C13FD633430}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -223,6 +227,22 @@ Global
 		{A94F2D8B-180C-4CB2-B51E-F147BE552E64}.Release|x64.Build.0 = Release|x64
 		{A94F2D8B-180C-4CB2-B51E-F147BE552E64}.Release|x86.ActiveCfg = Release|Win32
 		{A94F2D8B-180C-4CB2-B51E-F147BE552E64}.Release|x86.Build.0 = Release|Win32
+		{660D58C0-84AC-4BF7-9377-5335A40CD494}.Debug|x64.ActiveCfg = Debug|x64
+		{660D58C0-84AC-4BF7-9377-5335A40CD494}.Debug|x64.Build.0 = Debug|x64
+		{660D58C0-84AC-4BF7-9377-5335A40CD494}.Debug|x86.ActiveCfg = Debug|Win32
+		{660D58C0-84AC-4BF7-9377-5335A40CD494}.Debug|x86.Build.0 = Debug|Win32
+		{660D58C0-84AC-4BF7-9377-5335A40CD494}.Release|x64.ActiveCfg = Release|x64
+		{660D58C0-84AC-4BF7-9377-5335A40CD494}.Release|x64.Build.0 = Release|x64
+		{660D58C0-84AC-4BF7-9377-5335A40CD494}.Release|x86.ActiveCfg = Release|Win32
+		{660D58C0-84AC-4BF7-9377-5335A40CD494}.Release|x86.Build.0 = Release|Win32
+		{334BD374-EB5C-4946-9977-3C13FD633430}.Debug|x64.ActiveCfg = Debug|x64
+		{334BD374-EB5C-4946-9977-3C13FD633430}.Debug|x64.Build.0 = Debug|x64
+		{334BD374-EB5C-4946-9977-3C13FD633430}.Debug|x86.ActiveCfg = Debug|Win32
+		{334BD374-EB5C-4946-9977-3C13FD633430}.Debug|x86.Build.0 = Debug|Win32
+		{334BD374-EB5C-4946-9977-3C13FD633430}.Release|x64.ActiveCfg = Release|x64
+		{334BD374-EB5C-4946-9977-3C13FD633430}.Release|x64.Build.0 = Release|x64
+		{334BD374-EB5C-4946-9977-3C13FD633430}.Release|x86.ActiveCfg = Release|Win32
+		{334BD374-EB5C-4946-9977-3C13FD633430}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
